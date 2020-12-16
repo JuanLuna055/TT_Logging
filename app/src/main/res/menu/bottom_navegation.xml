@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/firstFragment"
+        android:icon="@drawable/calendario_icono1"
+        android:title="Alarmas"></item>
+
+    <item
+        android:id="@+id/secondFragment"
+        android:icon="@drawable/estadisticas_icono"
+        android:title="Informa"></item>
+    <item
+        android:id="@+id/thirdFragment"
+        android:icon="@drawable/grupo_icono"
+        android:title="Paciente"></item>
+
+    <item
+        android:id="@+id/cuatroFragment"
+        android:icon="@drawable/ic_action_name"
+        android:title="Usuario"></item>
+
+
+
+</menu>

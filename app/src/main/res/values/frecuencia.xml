@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- String para Agregar_medicina/Spinner_frecuencia-->
+    <string-array name="frecuncia_dias">
+        <item>Cada Día</item>
+        <item>Cada Dos</item>
+        <item>Cada Tres</item>
+        <item>Cada Cuatro</item>
+        <item>Cada Cinco</item>
+        <item>Cada sies</item>
+        <item>Cada semana</item>
+        <item>Cada mes</item>
+    </string-array>
+
+</resources>

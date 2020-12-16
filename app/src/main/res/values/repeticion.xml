@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- String para Agregar_medicina/Spinner_frecuencia-->
+    <string-array name="Repeticiones">
+        <item>Una vez al dia</item>
+        <item>2 veces al dia</item>
+        <item>3 veces al dia</item>
+        <item>4 veces al dia</item>
+        <item>5 veces al dia</item>
+        <item>6 veces al dia</item>
+        <item>7 veces al dia</item>
+        <item>8 veces al dia</item>
+        <item>9 veces al dia</item>
+        <item>10 veces al dia</item>
+        <item>11 veces al dia</item>
+        <item>12 veces al dia</item>
+        <item>24 veces al dia</item>
+
+
+    </string-array>
+
+</resources>

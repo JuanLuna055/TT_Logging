@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Receta.repeticiones.Ocho_Veces_Fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_hora"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/green_light"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:hint="Alarma: "
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/tv_hora2"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/green_light"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:hint="Alarma: "
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/tv_hora3"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/green_light"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:hint="Alarma: "
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/tv_hora4"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/green_light"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:hint="Alarma: "
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/tv_hora5"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/green_light"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:hint="Alarma: "
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/tv_hora6"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/green_light"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:hint="Alarma: "
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/tv_hora7"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/green_light"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:hint="Alarma: "
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/tv_hora8"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/green_light"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:hint="Alarma: "
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+</FrameLayout>

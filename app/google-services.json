@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "46420621573",
+    "firebase_url": "https://tuseguimiento-aaa5c.firebaseio.com",
+    "project_id": "tuseguimiento-aaa5c",
+    "storage_bucket": "tuseguimiento-aaa5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46420621573:android:05e7e47fa57517d0c45f6c",
+        "android_client_info": {
+          "package_name": "com.example.tt_logging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46420621573-6e18itsnd8a4n491mq93h8gg3c4kepmi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh72nFUjBHXCNkBTiYKiqIbd8e-TFpqY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46420621573-6e18itsnd8a4n491mq93h8gg3c4kepmi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
