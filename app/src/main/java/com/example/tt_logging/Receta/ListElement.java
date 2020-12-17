@@ -28,9 +28,8 @@ public class ListElement implements Serializable {
     ///Hola perro como estas
     // Buebos
 
-    //por que no sirve este pedo
-    // Porque no quiere
-
+    //por que no sirve este pedo    // Porque no quiere
+    // Calmese
     public ListElement(ListElement item){
         color = item.getColor();
         medicamento = item.medicamento;
