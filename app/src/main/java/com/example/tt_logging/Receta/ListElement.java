@@ -25,7 +25,7 @@ public class ListElement implements Serializable {
     }
 // private int id_img;
 
-    ///Hola perro como estas
+    // Hola perro como estas
     // Buebos
     //por que no sirve este pedo    // Porque no quiere
     // Calmese prro
