@@ -22,6 +22,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     private LayoutInflater mInflater;
 
     //listener
+    // Commit 2
     private View.OnClickListener listener;
     //private Context context;
 

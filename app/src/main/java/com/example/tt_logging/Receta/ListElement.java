@@ -14,8 +14,21 @@ public class ListElement implements Serializable {
     private Calendar inicio;
     private Calendar termina;
     private String id_medicamento;
+    private int repeticion;
 
+    public String getId_medicamento() {
+        return id_medicamento;
+    }
+
+    public void setId_medicamento(String id_medicamento) {
+        this.id_medicamento = id_medicamento;
+    }
 // private int id_img;
+
+    ///Hola perro como estas
+    // Buebos
+
+    //por que no sirve este pedo
 
     public ListElement(ListElement item){
         color = item.getColor();
@@ -25,8 +38,8 @@ public class ListElement implements Serializable {
         cantidad = item.cantidad;
     }
 
-    public ListElement(String color, String medicamento, String recordatorio, String status, int cantidad, Calendar inicio, Calendar terminal, ArrayList<String> hora) {
-        this.color = color;
+    public ListElement(String color, String medicamento, String recordatorio, String status, int cantidad, Calendar inicio, Calendar terminal, ArrayList<String> hora,int repetir) {
+        this.color = "hola perro";
         this.medicamento = medicamento;
         this.recordatorio = recordatorio;
         this.status = status;
@@ -34,7 +47,7 @@ public class ListElement implements Serializable {
         this.inicio = inicio;
         this.termina = terminal;
 
-        id_medicamento = medicamento+"-r"+recordatorio+"-s"+status+"-c"+cantidad+"-i"+"a-"+
+        id_medicamento = medicamento+"-r"+recordatorio+"-s"+status+"-c"+cantidad+"-i"+repetir+"-a"+
                 inicio.get(Calendar.YEAR)+"m-"+inicio.get(Calendar.MONTH)+"-d"+inicio.get(Calendar.DAY_OF_MONTH)+"-h"+inicio.get(Calendar.HOUR_OF_DAY)+
                 "t-"+"a-"+terminal.get(Calendar.YEAR)+"m-"+terminal.get(Calendar.MONTH)+"-d"+terminal.get(Calendar.DAY_OF_MONTH);
 
@@ -56,39 +69,39 @@ public class ListElement implements Serializable {
                 break;
             }
             case 5:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4);
                 break;
             }
             case 6:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4)+hora.get(5);
                 break;
             }
             case 7:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4)+hora.get(5)+hora.get(6);
                 break;
             }
             case 8:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4)+hora.get(5)+hora.get(6)+hora.get(7);
                 break;
             }
             case 9:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4)+hora.get(5)+hora.get(6)+hora.get(7)+hora.get(8);
                 break;
             }
             case 10:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4)+hora.get(5)+hora.get(6)+hora.get(7)+hora.get(8)+hora.get(9);
                 break;
             }
             case 11:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4)+hora.get(5)+hora.get(6)+hora.get(7)+hora.get(8)+hora.get(9)+hora.get(10);
                 break;
             }
             case 12:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4)+hora.get(5)+hora.get(6)+hora.get(7)+hora.get(8)+hora.get(9)+hora.get(10)+hora.get(11);
                 break;
             }
             case 24:{
-                id_medicamento=id_medicamento+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0)+hora.get(0);
+                id_medicamento=id_medicamento+hora.get(0)+hora.get(1)+hora.get(2)+hora.get(3)+hora.get(4)+hora.get(5)+hora.get(6)+hora.get(7)+hora.get(8)+hora.get(9)+hora.get(10)+hora.get(11)+hora.get(12);
                 break;
             } default:{
                 break;

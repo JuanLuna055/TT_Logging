@@ -100,7 +100,6 @@ public class Mod_unavez extends AppCompatActivity {
                         minutos=m;
                         tvhora.setText(String.format("%02d:%02d", h, m));
                         System.out.println(calendar.getTime().toString());
-
                     }
                 }, hora, minutos, true);
                 timePickerDialog.show();
@@ -121,11 +120,10 @@ public class Mod_unavez extends AppCompatActivity {
                 System.out.println(calendar.getTime().toString());
                 Generar_Alarma(calendar,medicamento.getMedicamento(),medicamento.getRecordatorio(),termina);
                 //Este tag donde haremos gua de la notifcacion
-               // WorkManager_noti.Guardarnoti(Alerttime,data,"tag1");
+                //WorkManager_noti.Guardarnoti(Alerttime,data,"tag1");
                 Toast.makeText(getApplicationContext(), "Alarma guardada.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Mod_unavez.this, Menu_principla_Activity.class);
                 Bundle bundle = new Bundle();
-
                 bundle.putSerializable("medicina",medicamento);
                 intent.putExtras(bundle);
                 startActivity(intent);

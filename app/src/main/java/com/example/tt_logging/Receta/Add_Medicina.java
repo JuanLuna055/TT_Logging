@@ -138,7 +138,6 @@ public class Add_Medicina extends AppCompatActivity {
                         SimpleDateFormat formant = new SimpleDateFormat("dd/MM/yyyy");
                         String strDate = formant.format(inicio.getTime());
                         fecha_inicio.setText(strDate);
-
                     }
                 },anio,mes,dia);
                 datePickerDialog.show();
@@ -175,9 +174,10 @@ public class Add_Medicina extends AppCompatActivity {
                 btn_medicina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // horas: (16-30)
                 horas.add("("+inicio.get(Calendar.HOUR_OF_DAY)+"-"+inicio.get(Calendar.MINUTE));
                 Toast.makeText(Add_Medicina.this, "Estamos por ebvari medicina", Toast.LENGTH_SHORT).show();
-                medicamento = new ListElement("#FF0000",nom_medicamento.toString(),recordato.toString(),"Cantidad:",i++,inicio,termino,horas);
+                medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Cantidad:",i++,inicio,termino,horas,repeticion);
                 Intent intent = new Intent(Add_Medicina.this, Menu_principla_Activity.class);
                 bundle = new Bundle();
                 bundle.putSerializable("medicina",medicamento);
@@ -192,7 +192,7 @@ public class Add_Medicina extends AppCompatActivity {
             public void onClick(View view) {
                 if (nom_medicamento.getText().length() > 0){
                     System.out.println("----> Se ingreso el mediccamento: "+nom_medicamento.getText().toString()+" Con recordatorio: "+recordato.getText().toString());
-                    medicamento = new ListElement("#F48888",""+nom_medicamento.getText().toString(),""+recordato.getText().toString(),"Cantidad",i++,inicio,termino,horas);
+                    medicamento = new ListElement("#F48888",""+nom_medicamento.getText().toString(),""+recordato.getText().toString(),"Cantidad",i++,inicio,termino,horas,repeticion);
                     modifica_horario(medicamento,frecuncia,repeticion);
                 }else{
                     Toast.makeText(getApplicationContext(),"Llenar todos los datos.",Toast.LENGTH_SHORT).show();
