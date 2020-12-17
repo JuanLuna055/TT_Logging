@@ -17,6 +17,8 @@ public class ListElement implements Serializable {
 
 // private int id_img;
 
+    ///Hola perro como estas
+
     public ListElement(ListElement item){
         color = item.getColor();
         medicamento = item.medicamento;
