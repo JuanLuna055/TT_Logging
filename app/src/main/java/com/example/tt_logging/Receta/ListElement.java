@@ -29,6 +29,7 @@ public class ListElement implements Serializable {
     // Buebos
 
     //por que no sirve este pedo
+    // Porque no quiere
 
     public ListElement(ListElement item){
         color = item.getColor();
@@ -39,7 +40,7 @@ public class ListElement implements Serializable {
     }
 
     public ListElement(String color, String medicamento, String recordatorio, String status, int cantidad, Calendar inicio, Calendar terminal, ArrayList<String> hora,int repetir) {
-        this.color = "hola perro";
+        this.color = color;
         this.medicamento = medicamento;
         this.recordatorio = recordatorio;
         this.status = status;

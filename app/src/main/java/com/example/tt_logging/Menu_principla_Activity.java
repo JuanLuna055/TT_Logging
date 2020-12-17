@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.tt_logging.Receta.ListElement;
 import com.example.tt_logging.Receta.ThirdFragment;
@@ -53,7 +54,12 @@ public class Menu_principla_Activity extends AppCompatActivity {
             //loadFragment(thirdFragment);
             preferences = getSharedPreferences("medicamento", Context.MODE_PRIVATE);
             SharedPreferences.Editor obj = preferences.edit();
-            //obj.putString( )
+            cargar_a_fichero();
+            try {
+                Guardar_en_Archivo(medicamento);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
 
         }
 
@@ -93,7 +99,7 @@ public class Menu_principla_Activity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void cargar_a_fichero(String id_notificacion){
+    public void cargar_a_fichero(){
         String archivos [] = fileList();
 
         if (ArchivoExiste(archivos, "receta.txt")){
@@ -128,12 +134,15 @@ public class Menu_principla_Activity extends AppCompatActivity {
         return false;
     }
 
-    public void Guardar_en_Archivo(View view, ListElement medicamento) throws FileNotFoundException {
+    public void Guardar_en_Archivo(ListElement medicamentos) throws FileNotFoundException {
         OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("receta.txt", Activity.MODE_PRIVATE));
         try {
-            archivo.write(medicamento.getId_medicamento());
+            archivo.write(medicamentos.getId_medicamento());
+            archivo.flush();
+            archivo.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Toast.makeText(this, "Se ha guardao el medicamento en el archivo", Toast.LENGTH_SHORT).show();
     }
 }
