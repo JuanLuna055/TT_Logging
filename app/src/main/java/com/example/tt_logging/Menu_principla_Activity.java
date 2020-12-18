@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.work.impl.model.Preference;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -19,7 +22,9 @@ import com.example.tt_logging.Receta.ThirdFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -36,11 +41,18 @@ public class Menu_principla_Activity extends AppCompatActivity {
     private String hora;
     private Bundle notificacion;
     private SharedPreferences preferences;
+    ArrayList<String> ids_medicamentos = new ArrayList<>();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principla_);
-
+        System.out.println("Estamos en onCreate Activiti_principal");
         Bundle objeto = getIntent().getExtras();
         ListElement medicamento = null;
         if(objeto != null){
@@ -52,17 +64,21 @@ public class Menu_principla_Activity extends AppCompatActivity {
             System.out.println("|||||| El dato resivido es el siguiente:");
             System.out.println("Medicamento: "+medicamento.getMedicamento()+" Status: "+medicamento.getStatus()+" Recordatorio: "+medicamento.getRecordatorio());
             //loadFragment(thirdFragment);
-            preferences = getSharedPreferences("medicamento", Context.MODE_PRIVATE);
-            SharedPreferences.Editor obj = preferences.edit();
-            cargar_a_fichero();
-            try {
-                Guardar_en_Archivo(medicamento);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+           // preferences = getSharedPreferences("medicamento", Context.MODE_PRIVATE);
+           // SharedPreferences.Editor obj = preferences.edit();
 
+            //escribirFicheroMemoriaInterna(medicamento.getId_medicamento());
+            //leerFicheroMemoriaInterna();
+
+            guardar_shared(medicamento.getId_medicamento());
+            leer_shared();
+            mostrarMedicamentos(ids_medicamentos);
         }
-
+        mostrarMedicamentos(ids_medicamentos);
+        leer_shared();
+        mostrarMedicamentos(ids_medicamentos);
+        eliminarPreferences();
+        leer_shared();
         notificacion = new Bundle();
         notificacion.putSerializable("notificacion",medicamento);
         thirdFragment.setArguments(notificacion);
@@ -99,50 +115,108 @@ public class Menu_principla_Activity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void cargar_a_fichero(){
-        String archivos [] = fileList();
-
-        if (ArchivoExiste(archivos, "receta.txt")){
+    private void escribirFicheroMemoriaInterna(String medicina){
+        OutputStreamWriter escritor=null;
+        try
+        {
+            escritor=new OutputStreamWriter(openFileOutput("receta.txt", Context.MODE_PRIVATE));
+            escritor.write(medicina+"\n");
+        }
+        catch (Exception ex)
+        {
+            Log.e("ivan", "Error al escribir fichero a memoria interna");
+        }
+        finally
+        {
             try {
-                InputStreamReader archivo = new InputStreamReader(openFileInput("receta.txt"));
-                BufferedReader br = new BufferedReader(archivo);
-                String linea = br.readLine();
-                String recetaCompleta="";
-                while(linea != null){
-                    recetaCompleta = recetaCompleta + linea + "\n";
-                    linea = br.readLine();
-                    System.out.println("-R: "+linea);
-                }
-                br.close();
-                archivo.close();
-                System.out.println(recetaCompleta);
-            }catch (FileNotFoundException e) {
-                e.printStackTrace();
+                if(escritor!=null)
+                    escritor.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
-    private boolean ArchivoExiste(String[] archivos, String nombreArchivo) {
-        for(int i=0; i<archivos.length;i++){
-            if(nombreArchivo.equals(archivos[i])){
-                return true;
+    private void leerFicheroMemoriaInterna() {
+        InputStreamReader flujo=null;
+        BufferedReader lector=null;
+        try
+        {
+            flujo= new InputStreamReader(openFileInput("receta.txt"));
+            lector= new BufferedReader(flujo);
+            String texto = lector.readLine();
+            while(texto!=null)
+            {
+                System.out.print("-R:"+texto);
+                texto = lector.readLine();
             }
         }
-        return false;
+        catch (Exception ex)
+        {
+            Log.e("ivan", "Error al leer fichero desde memoria interna");
+        }
+        finally
+        {
+            try {
+                if(flujo!=null)
+                    flujo.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void Guardar_en_Archivo(ListElement medicamentos) throws FileNotFoundException {
-        OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("receta.txt", Activity.MODE_PRIVATE));
-        try {
-            archivo.write(medicamentos.getId_medicamento());
-            archivo.flush();
-            archivo.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Toast.makeText(this, "Se ha guardao el medicamento en el archivo", Toast.LENGTH_SHORT).show();
+    private void guardar_shared(String id_med){
+        System.out.println("Guardaremos el medicamento");
+        SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        SharedPreferences.Editor miEditor = datos.edit();
+        boolean ans=true;
+        int i=0;
+        do {
+
+            if(datos.getString("id_med"+i,"error") == "error" ){
+                System.out.println("Se guardo el medicamento: id_med"+i);
+                miEditor.putString("id_med"+i,id_med);
+                miEditor.apply();
+                break;
+            }
+            System.out.println("--valor de i: "+i);
+            i++;
+        }while (i<10);
+
+
     }
+
+    private void leer_shared(){
+        SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        System.out.println("Leemos de Shared...");
+        int i=0;
+        do{
+            if(datos.getString("id_med"+i,"error") != "error"){
+                System.out.println("Se pudo leer el id_med"+i);
+                ids_medicamentos.add(datos.getString("id_med"+i,"Sin medicamento"));
+            }
+            System.out.println("Valor de i: "+i);
+            i++;
+        }while (i<10);
+    }
+
+    private void mostrarMedicamentos(ArrayList<String> medicinas){
+        if (medicinas.isEmpty()){
+            System.out.println("No hay ninguna medicina :(");
+        }else{
+            for (int i=0; i<medicinas.size();i++){
+                System.out.println(i+"Elemento: "+medicinas.get(i));
+            }
+        }
+
+    }
+
+    private void eliminarPreferences(){
+        SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        SharedPreferences.Editor miEditor = datos.edit();
+        miEditor.clear();
+        miEditor.apply();
+    }
+
 }

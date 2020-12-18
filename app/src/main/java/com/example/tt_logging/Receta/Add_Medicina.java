@@ -175,7 +175,7 @@ public class Add_Medicina extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // horas: (16-30)
-                horas.add("("+inicio.get(Calendar.HOUR_OF_DAY)+"-"+inicio.get(Calendar.MINUTE));
+                horas.add("("+inicio.get(Calendar.HOUR_OF_DAY)+"-"+inicio.get(Calendar.MINUTE)+")");
                 Toast.makeText(Add_Medicina.this, "Estamos por ebvari medicina", Toast.LENGTH_SHORT).show();
                 medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Cantidad:",i++,inicio,termino,horas,repeticion);
                 Intent intent = new Intent(Add_Medicina.this, Menu_principla_Activity.class);
