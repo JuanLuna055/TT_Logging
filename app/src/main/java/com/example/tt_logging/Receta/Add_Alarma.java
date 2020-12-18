@@ -10,12 +10,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tt_logging.Add_Tratamiento;
 import com.example.tt_logging.R;
 
 public class Add_Alarma extends AppCompatActivity {
 
 
     private CardView add_medicina;
+    private CardView add_tratamiento;
 
 
     @Override
@@ -32,6 +34,18 @@ public class Add_Alarma extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(),"agregar medicina",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent (Add_Alarma.this,Add_Medicina.class));
+                finish();
+            }
+        });
+
+        //Boton de agregar tratamiento
+        add_tratamiento = (CardView)findViewById(R.id.add_tratamiento);
+
+        add_tratamiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Agregar Tratamiento",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent (Add_Alarma.this, Add_Tratamiento.class));
                 finish();
             }
         });
