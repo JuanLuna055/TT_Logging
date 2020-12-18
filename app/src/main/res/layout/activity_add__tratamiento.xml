@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".Add_Tratamiento">
+
+    <Button
+        android:id="@+id/button_elegirArchivo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elegir archivo" />
+
+    <EditText
+        android:id="@+id/editar_nombre_foto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/button_elegirArchivo"
+        android:hint="Ingrese fecha de la receta" />
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/progress_bar"
+        android:layout_below="@+id/editar_nombre_foto"
+        android:layout_marginTop="16dp" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/subir_foto"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/subir_foto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="16dp"
+        android:text="Subir" />
+
+    <TextView
+        android:id="@+id/text_view_mostrar_recetas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/subir_foto"
+        android:layout_alignBottom="@+id/subir_foto"
+        android:layout_marginStart="99dp"
+        android:layout_marginBottom="7dp"
+        android:layout_toEndOf="@+id/subir_foto"
+        android:gravity="center"
+        android:text="Mostrar recetas"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>
