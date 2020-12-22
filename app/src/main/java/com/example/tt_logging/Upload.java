@@ -1,8 +1,12 @@
 package com.example.tt_logging;
 
+import com.google.firebase.database.Exclude;
+
 public class Upload{
     private String mName;
     private String mImageUrl;
+    //Para eliminar o descargar el archivo
+    private String mKey;
 
     public Upload(){
 
@@ -21,4 +25,9 @@ public class Upload{
     public String getImageUrl(){return mImageUrl;}
     public void setImageUrl(String imageUrl){mImageUrl = imageUrl;}
 
+    //metodos para eliminar o descargar la imagen
+    @Exclude
+    public String getKey(){return mKey;}
+    @Exclude
+    public void setKey(String key){mKey = key;}
 }
