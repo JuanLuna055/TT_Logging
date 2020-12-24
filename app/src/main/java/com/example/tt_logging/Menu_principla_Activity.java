@@ -36,16 +36,29 @@ public class Menu_principla_Activity extends AppCompatActivity {
     SecondFragment secondFragment = new SecondFragment();
     ThirdFragment thirdFragment = new ThirdFragment();
     CuartoFragment cuartofragment = new CuartoFragment();
-    public List<ListElement> notificaciones = new ArrayList<>();;
     private boolean permiso;
     private String hora;
     private Bundle notificacion;
+    private String nota_recibida;
     private SharedPreferences preferences;
-    ArrayList<String> ids_medicamentos = new ArrayList<>();
+    private ArrayList<String> ids_medicamentos = new ArrayList<>();
 
     @Override
     protected void onStart() {
         super.onStart();
+        System.out.println("Menu principal: onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("Menu principal: onResumen");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("Menu principal: Destroy");
     }
 
     @Override
@@ -55,32 +68,44 @@ public class Menu_principla_Activity extends AppCompatActivity {
         System.out.println("Estamos en onCreate Activiti_principal");
         Bundle objeto = getIntent().getExtras();
         ListElement medicamento = null;
+        ids_medicamentos.clear();
+        //eliminarPreferencesMedicamentos();
+        int bandera =0;
+        // Obtenemos los Shareds con los datos Medicamento Notas persona de cuidado.
         if(objeto != null){
-            // llegada de horario
-            hora =  objeto.getString("horario");
-            System.out.println("|||°°°°°°°°Horario: "+ hora);
             medicamento = (ListElement) objeto.getSerializable("medicina");
-            notificaciones.add(medicamento);
-            System.out.println("|||||| El dato resivido es el siguiente:");
-            System.out.println("Medicamento: "+medicamento.getMedicamento()+" Status: "+medicamento.getStatus()+" Recordatorio: "+medicamento.getRecordatorio());
-            //loadFragment(thirdFragment);
-           // preferences = getSharedPreferences("medicamento", Context.MODE_PRIVATE);
-           // SharedPreferences.Editor obj = preferences.edit();
+            if (medicamento != null){
+                // llegada de horario
+                hora =  objeto.getString("horario");
+                System.out.println("|||°°°°°°°°Horario: "+ hora);
+                // Obtenemos medicina
+                medicamento = (ListElement) objeto.getSerializable("medicina");
+                System.out.println("|||||| El dato resivido es el siguiente:");
+                System.out.println("Medicamento: "+medicamento.getMedicamento()+" Status: "+medicamento.getStatus()+" Recordatorio: "+medicamento.getRecordatorio());
+                leer_shared();
+                guardar_shared(medicamento.getId_medicamento());
+                mostrarMedicamentos(ids_medicamentos);
+                guardarArrayNotificaciones();
+                bandera = 1;
+            }
 
-            //escribirFicheroMemoriaInterna(medicamento.getId_medicamento());
-            //leerFicheroMemoriaInterna();
-
-            guardar_shared(medicamento.getId_medicamento());
-            leer_shared();
+            nota_recibida = objeto.getString("nota","sin nota");
+            if(nota_recibida != "sin nota"){
+                leer_shared_notas();
+                guardar_shared_Notas(nota_recibida);
+            }
+        }
+        if(bandera == 0){
+            guardarArrayNotificaciones();
             mostrarMedicamentos(ids_medicamentos);
         }
-        mostrarMedicamentos(ids_medicamentos);
-        leer_shared();
-        mostrarMedicamentos(ids_medicamentos);
-        eliminarPreferences();
-        leer_shared();
+
+
+
+
+        // Enviamos los datos necesarios a los fraagmentos
         notificacion = new Bundle();
-        notificacion.putSerializable("notificacion",medicamento);
+        notificacion.putSerializable("notificacion", ids_medicamentos);
         thirdFragment.setArguments(notificacion);
 
         BottomNavigationView navegation = findViewById(R.id.bottom_navegation);
@@ -115,56 +140,6 @@ public class Menu_principla_Activity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void escribirFicheroMemoriaInterna(String medicina){
-        OutputStreamWriter escritor=null;
-        try
-        {
-            escritor=new OutputStreamWriter(openFileOutput("receta.txt", Context.MODE_PRIVATE));
-            escritor.write(medicina+"\n");
-        }
-        catch (Exception ex)
-        {
-            Log.e("ivan", "Error al escribir fichero a memoria interna");
-        }
-        finally
-        {
-            try {
-                if(escritor!=null)
-                    escritor.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void leerFicheroMemoriaInterna() {
-        InputStreamReader flujo=null;
-        BufferedReader lector=null;
-        try
-        {
-            flujo= new InputStreamReader(openFileInput("receta.txt"));
-            lector= new BufferedReader(flujo);
-            String texto = lector.readLine();
-            while(texto!=null)
-            {
-                System.out.print("-R:"+texto);
-                texto = lector.readLine();
-            }
-        }
-        catch (Exception ex)
-        {
-            Log.e("ivan", "Error al leer fichero desde memoria interna");
-        }
-        finally
-        {
-            try {
-                if(flujo!=null)
-                    flujo.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     private void guardar_shared(String id_med){
         System.out.println("Guardaremos el medicamento");
@@ -180,14 +155,35 @@ public class Menu_principla_Activity extends AppCompatActivity {
                 miEditor.apply();
                 break;
             }
-            System.out.println("--valor de i: "+i);
+            //System.out.println("--valor de i: "+i);
             i++;
         }while (i<10);
-
-
     }
 
     private void leer_shared(){
+        SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        System.out.println("Leemos de Shared...");
+        int i=0;
+        do{
+            if(datos.getString("id_med"+i,"error") != "error"){
+                System.out.println("Se pudo leer el id_med"+i);
+            }
+            i++;
+        }while (i<10);
+    }
+
+    private void mostrarMedicamentos(ArrayList<String> medicinas){
+        int i=0;
+        if (medicinas.isEmpty()){
+            System.out.println("No hay ninguna medicina :(");
+        }else{
+            for (i=0; i<medicinas.size();i++){
+                System.out.println(i+"Elemento: "+medicinas.get(i));
+            }
+        }
+    }
+
+    public void guardarArrayNotificaciones(){
         SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
         System.out.println("Leemos de Shared...");
         int i=0;
@@ -201,19 +197,47 @@ public class Menu_principla_Activity extends AppCompatActivity {
         }while (i<10);
     }
 
-    private void mostrarMedicamentos(ArrayList<String> medicinas){
-        if (medicinas.isEmpty()){
-            System.out.println("No hay ninguna medicina :(");
-        }else{
-            for (int i=0; i<medicinas.size();i++){
-                System.out.println(i+"Elemento: "+medicinas.get(i));
-            }
-        }
+    private void guardar_shared_Notas(String nota){
+        System.out.println("Guardaremos la nota");
+        SharedPreferences datos = getSharedPreferences("notas",MODE_PRIVATE);
+        SharedPreferences.Editor miEditor = datos.edit();
+        boolean ans=true;
+        int i=0;
+        do {
 
+            if(datos.getString("id_med"+i,"error") == "error" ){
+                System.out.println("Se guardo el no: id_nota"+i);
+                miEditor.putString("id_nota"+i,nota);
+                miEditor.apply();
+                break;
+            }
+            System.out.println("--valor de i: "+i);
+            i++;
+        }while (i<10);
     }
 
-    private void eliminarPreferences(){
+    //VEMOS LOS DATOS QUE SE ENCUENTRA EN EL SHARED
+    private void leer_shared_notas(){
+        SharedPreferences datos = getSharedPreferences("notas",MODE_PRIVATE);
+        System.out.println("Leemos de Shared...");
+        int i=0;
+        do{
+            if(datos.getString("id_nota"+i,"error") != "error"){
+                System.out.println("Se pudo leer el id_nota"+i);
+            }
+            i++;
+        }while (i<10);
+    }
+
+    private void eliminarPreferencesMedicamentos(){
         SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        SharedPreferences.Editor miEditor = datos.edit();
+        miEditor.clear();
+        miEditor.apply();
+    }
+
+    private void eliminarPreferencesNotas(){
+        SharedPreferences datos = getSharedPreferences("notas",MODE_PRIVATE);
         SharedPreferences.Editor miEditor = datos.edit();
         miEditor.clear();
         miEditor.apply();

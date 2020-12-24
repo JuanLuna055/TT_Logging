@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#A5D6A7"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+
+        <ImageView
+            android:id="@+id/iconImagenViewP"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            app:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp"></ImageView>
+
+        <TextView
+            android:id="@+id/name_persona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_toRightOf="@+id/iconImagenViewP"
+            android:layout_toEndOf="@+id/iconImagenViewP"
+            android:text="Persona"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"></TextView>
+        <TextView
+            android:id="@+id/fecha_cuidado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_below="@+id/name_persona"
+            android:layout_toEndOf="@+id/iconImagenViewP"
+            android:textColor="@android:color/black"
+            android:text="Fecha de cuidado:"
+            android:textStyle="italic"
+            android:textSize="18sp"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/telefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:layout_below="@id/fecha_cuidado"
+            android:text="Telefono:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_toEndOf="@+id/iconImagenViewP"
+            ></TextView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

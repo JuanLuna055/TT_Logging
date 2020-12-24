@@ -3,6 +3,7 @@ package com.example.tt_logging.Receta;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.work.Data;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.example.tt_logging.SecondFragment;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Add_Medicina extends AppCompatActivity {
@@ -50,12 +52,12 @@ public class Add_Medicina extends AppCompatActivity {
     private unavez_Fragment una;
     private Button btn_medicina, btn_modHorario;
     private Bundle bundle;
-    private int i, anio, mes, dia;
+    private int i, anio, mes, dia, termina;
     private Button selefecha_inicio , selefecha_final;
     private Spinner spinner_frecuncia;
     private Spinner spinner_veces;
-    private Calendar inicio, termino;
-    private Calendar actual;
+    private Calendar inicio, termino;private Calendar actual;
+
     private ArrayList<String> horas;
 
     @Override
@@ -126,9 +128,7 @@ public class Add_Medicina extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-                        if(d == dia){
-                            d++;
-                        }
+
                         inicio.set(Calendar.DAY_OF_MONTH,d);
                         inicio.set(Calendar.MONTH,m);
                         inicio.set(Calendar.YEAR,y);
@@ -168,14 +168,19 @@ public class Add_Medicina extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-        horas.add("("+inicio.get(Calendar.HOUR_OF_DAY)+"-"+inicio.get(Calendar.MINUTE)+")");
             /// FINALIZAR
                 btn_medicina = (Button)findViewById(R.id.button_add_medi);
                 btn_medicina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // horas: (16-30)
-                horas.add("("+inicio.get(Calendar.HOUR_OF_DAY)+"-"+inicio.get(Calendar.MINUTE)+")");
+                cargar_horas(repeticion);
+                termina = termino.get(Calendar.DAY_OF_MONTH) - inicio.get(Calendar.DAY_OF_MONTH);
+                if(termina < 0){
+                    termina = -termina;
+                }
+                System.out.println("Termina en dias:"+termina);
+                Generar_Alarmas(repeticion,inicio,nom_medicamento.getText().toString(),recordato.getText().toString(),termina);
                 Toast.makeText(Add_Medicina.this, "Estamos por ebvari medicina", Toast.LENGTH_SHORT).show();
                 medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Cantidad:",i++,inicio,termino,horas,repeticion);
                 Intent intent = new Intent(Add_Medicina.this, Menu_principla_Activity.class);
@@ -197,8 +202,6 @@ public class Add_Medicina extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(),"Llenar todos los datos.",Toast.LENGTH_SHORT).show();
                 }
-
-
 
             }
         });
@@ -286,7 +289,6 @@ public class Add_Medicina extends AppCompatActivity {
 
     public void modifica_horario(ListElement medicamentoenv, int veces,int periodo){
         switch (veces){
-
             case 0:{
                 //Caso una al dia
                 Intent intent = new Intent(Add_Medicina.this, Mod_unavez.class);
@@ -360,4 +362,548 @@ public class Add_Medicina extends AppCompatActivity {
             } default: break;
         }
     }
+
+    public void cargar_horas (int veces){
+        switch (veces){
+            case 0:{
+                horas.add("(8-0)]");
+                break;
+            }
+            case 1:{
+                horas.add("(8-0)");
+                horas.add("(20-0)]");
+                break;
+            }case 2:{
+                horas.add("(8-0)");
+                horas.add("(14-0)");
+                horas.add("(20-0)]");
+
+                break;
+            }case 3:{
+                horas.add("(8-0)");
+                horas.add("(13-0)");
+                horas.add("(18-0)");
+                horas.add("(23-0)]");
+                break;
+            }case 4:{
+                horas.add("(7-0)");
+                horas.add("(10-45)");
+                horas.add("(15-30)");
+                horas.add("(19-45)");
+                horas.add("(20-0)]");
+                break;
+            }case 5:{
+                horas.add("(5-0)");
+                horas.add("(9-0)");
+                horas.add("(13-0)");
+                horas.add("(17-0)");
+                horas.add("(21-0)");
+                horas.add("(23-0)]");
+                break;
+            }case 6:{
+                //Caso una al dia
+                horas.add("(2-0)");
+                horas.add("(5-25)");
+                horas.add("(8-50)");
+                horas.add("(12-15)");
+                horas.add("(15-40)");
+                horas.add("(19-5)");
+                horas.add("(22-30)]");
+                break;
+            }case 7:{
+                //Caso una al dia
+                horas.add("(1-0)");
+                horas.add("(4-0)");
+                horas.add("(7-0)");
+                horas.add("(10-0)");
+                horas.add("(13-0)");
+                horas.add("(16-0)");
+                horas.add("(18-0)");
+                horas.add("(22-0)]");
+                break;
+            }case 8:{
+                //Caso una al dia
+                horas.add("(1-0)");
+                horas.add("(3-40)");
+                horas.add("(6-20)");
+                horas.add("(9-0)");
+                horas.add("(11-40)");
+                horas.add("(14-20)");
+                horas.add("(17-0)");
+                horas.add("(19-40)");
+                horas.add("(22-20)]");
+                break;
+            }case 9:{
+                //Caso una al dia
+                horas.add("(1-0)");
+                horas.add("(3-25)");
+                horas.add("(5-50)");
+                horas.add("(8-10)");
+                horas.add("(10-35)");
+                horas.add("(13-0)");
+                horas.add("(15-25)");
+                horas.add("(17-50)");
+                horas.add("(20-10)");
+                horas.add("(22-35)]");
+                break;
+            }case 10:{
+                //Caso una al dia
+                horas.add("(1-0)");
+                horas.add("(3-10)");
+                horas.add("(5-20)");
+                horas.add("(7-30)");
+                horas.add("(9-40)");
+                horas.add("(11-50)");
+                horas.add("(14-0)");
+                horas.add("(16-10)");
+                horas.add("18-20)");
+                horas.add("20-30)");
+                horas.add("22-40)]");
+                break;
+            }case 11:{
+                //Caso una al dia
+                horas.add("(1-0)");
+                horas.add("(2-0)");
+                horas.add("(4-0)");
+                horas.add("(6-0)");
+                horas.add("(10-0)");
+                horas.add("(12-0)");
+                horas.add("(14-0)");
+                horas.add("(16-0)");
+                horas.add("(18-0)");
+                horas.add("(20-0)");
+                horas.add("(22-0)");
+                horas.add("(23-55)]");
+                break;
+            }case 12:{
+                //Caso una al dia
+                horas.add("(1-0)");
+                horas.add("(2-0)");
+                horas.add("(3-0)");
+                horas.add("(4-0)");
+                horas.add("(5-0)");
+                horas.add("(6-0)");
+                horas.add("(7-0)");
+                horas.add("(8-0)");
+                horas.add("(9-0)");
+                horas.add("(10-0)");
+                horas.add("(11-0)");
+                horas.add("(12-0)");
+                horas.add("(13-0)");
+                horas.add("(14-0)");
+                horas.add("(15-0)");
+                horas.add("(16-0)");
+                horas.add("(17-0)");
+                horas.add("(18-0)");
+                horas.add("(19-0)");
+                horas.add("(20-0)");
+                horas.add("(21-0)");
+                horas.add("(22-0)");
+                horas.add("(23-0)");
+                horas.add("(23-55)]");
+                break;
+            } default: break;
+        }
+    }
+
+    public void alarmas_establecidas (Calendar fecha, String medicamento, String Detalles,int fin){
+        int j=0;
+        String tag;
+        Long AlerTime;
+        if (frecuncia == 7){
+            frecuncia =1;
+        }else{
+            frecuncia++;
+        }
+            j=0;
+            do{
+                tag = medicamento+"a"+fecha.get(Calendar.YEAR)+"m"+fecha.get(Calendar.MONTH)+"d"+fecha.get(Calendar.DAY_OF_MONTH)+"h"+fecha.get(Calendar.HOUR_OF_DAY);
+                System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
+                AlerTime = fecha.getTimeInMillis() - System.currentTimeMillis();
+                System.out.println("El tiempo para esta alarma es: "+AlerTime);
+                Data data = GuardarData(medicamento,Detalles,10);
+                //WorkManager_noti.Guardarnoti(AlerTime,data,tag);
+                fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),frecuncia));
+                j=j+frecuncia;
+            }while(j <= fin);
+
+    }
+
+    private Data GuardarData(String titulo, String detalle, int id_noti){
+        return new Data.Builder()
+                .putString("titulo",titulo)
+                .putString("detalle",detalle)
+                .putInt("id_noti",id_noti).build();
+    }
+
+    public Date sumarRestarDiasFecha(Date fecha, int dias){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha); // Configuramos la fecha que se recibe
+        calendar.add(Calendar.DAY_OF_MONTH, dias);  // numero de horas a añadir, o restar en caso de horas<0
+        return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+    }
+
+    private void Generar_Alarmas(int veces,Calendar fecha, String medicamento, String detalles, int fin){
+        switch (veces){
+            case 0:{
+                //(8-0)]");
+                fecha.set(Calendar.HOUR_OF_DAY,8);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }
+            case 1:{
+                //"(8-0)");
+                //"(20-0)]");
+                fecha.set(Calendar.HOUR_OF_DAY,8);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,20);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 2:{
+                //horas.add("(8-0)");horas.add("(14-0)");horas.add("(20-0)]");
+                fecha.set(Calendar.HOUR_OF_DAY,8);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,14);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,20);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 3:{
+                //horas.add("(8-0)");horas.add("(13-0)");horas.add("(18-0)");horas.add("(23-0)]");
+                fecha.set(Calendar.HOUR_OF_DAY,8);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,13);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,18);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,23);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 4:{
+                //horas.add("(7-0)");horas.add("(10-45)");horas.add("(15-30)");horas.add("(19-45)");horas.add("(20-0)]");
+                fecha.set(Calendar.HOUR_OF_DAY,7);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,10);
+                fecha.set(Calendar.MINUTE,45);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,15);
+                fecha.set(Calendar.MINUTE,30);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,19);
+                fecha.set(Calendar.MINUTE,45);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,20);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 5:{
+                //horas.add("(5-0)");horas.add("(9-0)");horas.add("(13-0)");horas.add("(17-0)");horas.add("(21-0)");horas.add("(23-0)]");
+                fecha.set(Calendar.HOUR_OF_DAY,5);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,9);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,13);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,17);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,21);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,23);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 6:{
+                //Caso una al dia
+                //horas.add("(2-0)");horas.add("(5-25)");horas.add("(8-50)");horas.add("(12-15)");horas.add("(15-40)");horas.add("(19-5)");horas.add("(22-30)]");
+                fecha.set(Calendar.HOUR_OF_DAY,2);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,5);
+                fecha.set(Calendar.MINUTE,25);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,8);
+                fecha.set(Calendar.MINUTE,50);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,12);
+                fecha.set(Calendar.MINUTE,15);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,15);
+                fecha.set(Calendar.MINUTE,40);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,19);
+                fecha.set(Calendar.MINUTE,5);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,22);
+                fecha.set(Calendar.MINUTE,30);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 7:{
+                //Caso una al dia
+                //horas.add("(1-0)");horas.add("(4-0)");horas.add("(7-0)");horas.add("(10-0)");horas.add("(13-0)");horas.add("(16-0)");horas.add("(18-0)");horas.add("(22-0)]");
+                fecha.set(Calendar.HOUR_OF_DAY,1);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,4);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,7);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,10);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,13);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,16);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,18);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,22);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+
+                break;
+            }case 8:{
+                //Caso una al dia
+                //horas.add("(1-0)");horas.add("(3-40)");horas.add("(6-20)");horas.add("(9-0)");horas.add("(11-40)");horas.add("(14-20)");horas.add("(17-0)");horas.add("(19-40)");horas.add("(22-20)]");
+                fecha.set(Calendar.HOUR_OF_DAY,1);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,3);
+                fecha.set(Calendar.MINUTE,40);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,6);
+                fecha.set(Calendar.MINUTE,20);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,9);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,11);
+                fecha.set(Calendar.MINUTE,40);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,14);
+                fecha.set(Calendar.MINUTE,20);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,17);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,19);
+                fecha.set(Calendar.MINUTE,40);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 9:{
+                //Caso una al dia
+                //horas.add("(1-0)");horas.add("(3-25)");horas.add("(5-50)");horas.add("(8-10)");
+                // horas.add("(10-35)");horas.add("(13-0)");horas.add("(15-25)");horas.add("(17-50)");horas.add("(20-10)");horas.add("(22-35)]");
+                fecha.set(Calendar.HOUR_OF_DAY,1);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,3);
+                fecha.set(Calendar.MINUTE,25);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,5);
+                fecha.set(Calendar.MINUTE,50);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,8);
+                fecha.set(Calendar.MINUTE,10);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,10);
+                fecha.set(Calendar.MINUTE,35);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,13);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,15);
+                fecha.set(Calendar.MINUTE,25);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,17);
+                fecha.set(Calendar.MINUTE,50);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,20);
+                fecha.set(Calendar.MINUTE,10);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,25);
+                fecha.set(Calendar.MINUTE,35);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 10:{
+                //Caso una al dia
+                //horas.add("(1-0)");horas.add("(3-10)");horas.add("(5-20)");horas.add("(7-30)");horas.add("(9-40)");
+                // horas.add("(11-50)");horas.add("(14-0)");horas.add("(16-10)");horas.add("18-20)");horas.add("20-30)");horas.add("22-40)]");
+                fecha.set(Calendar.HOUR_OF_DAY,1);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,3);
+                fecha.set(Calendar.MINUTE,10);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,5);
+                fecha.set(Calendar.MINUTE,20);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,7);
+                fecha.set(Calendar.MINUTE,30);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,9);
+                fecha.set(Calendar.MINUTE,40);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,11);
+                fecha.set(Calendar.MINUTE,50);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,14);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,16);
+                fecha.set(Calendar.MINUTE,10);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,18);
+                fecha.set(Calendar.MINUTE,20);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,20);
+                fecha.set(Calendar.MINUTE,30);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,22);
+                fecha.set(Calendar.MINUTE,40);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 11:{
+                //Caso una al dia
+                //horas.add("(1-0)");horas.add("(2-0)");horas.add("(4-0)");horas.add("(6-0)");horas.add("(10-0)");horas.add("(12-0)");
+                // horas.add("(14-0)");horas.add("(16-0)");horas.add("(18-0)");horas.add("(20-0)");horas.add("(22-0)");horas.add("(23-55)]");
+                fecha.set(Calendar.HOUR_OF_DAY,1);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,2);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,4);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,6);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,10);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,12);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,14);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,16);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,18);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,20);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,22);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,23);
+                fecha.set(Calendar.MINUTE,55);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                break;
+            }case 12:{
+                //Caso una al dia
+                //horas.add("(1-0)");horas.add("(2-0)");horas.add("(3-0)");horas.add("(4-0)");horas.add("(5-0)");horas.add("(6-0)");
+                // horas.add("(7-0)");horas.add("(8-0)");horas.add("(9-0)");horas.add("(10-0)");horas.add("(11-0)");horas.add("(12-0)");horas.add("(13-0)");horas.add("(14-0)");horas.add("(15-0)");horas.add("(16-0)");horas.add("(17-0)");horas.add("(18-0)");horas.add("(19-0)");horas.add("(20-0)");horas.add("(21-0)");horas.add("(22-0)");horas.add("(23-0)");horas.add("(23-55)]");
+                fecha.set(Calendar.HOUR_OF_DAY,1);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,2);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,3);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,4);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,5);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,6);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,7);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,8);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,9);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,10);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,11);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,12);
+                fecha.set(Calendar.MINUTE,55);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,13);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,14);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,15);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,16);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,17);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,18);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,19);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,20);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,21);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,22);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,23);
+                fecha.set(Calendar.MINUTE,0);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+                fecha.set(Calendar.HOUR_OF_DAY,23);
+                fecha.set(Calendar.MINUTE,55);
+                alarmas_establecidas(fecha,medicamento,detalles,fin);
+
+                break;
+            } default: break;
+        }
+    }
+
 }

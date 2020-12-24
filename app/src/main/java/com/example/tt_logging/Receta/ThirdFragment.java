@@ -24,6 +24,7 @@ public class ThirdFragment extends Fragment {
 
     public List<ListElement>  elements = new ArrayList<>();;
     public ListElement notif;
+    public ArrayList<String> notificaciones;
     public RecyclerView recyclerView_receta;
     private ImageButton btn_agregar;
     private TextView titular;
@@ -43,9 +44,10 @@ public class ThirdFragment extends Fragment {
         if(getArguments() != null){
             try {
 
-                notif = (ListElement) getArguments().getSerializable("notificacion");
-                System.out.println("/*/*/*/*/*/ Medicamento: "+notif.getMedicamento()+" Recomendacion: "+notif.getRecordatorio());
-                agregar_notificacion(notif);
+                notificaciones = (ArrayList<String>) getArguments().getSerializable("notificacion");
+                //System.out.println("/*/*/*/*/*/ Medicamento: "+notif.getMedicamento()+" Recomendacion: "+notif.getRecordatorio());
+                //agregar_notificacion(notif);
+                mostrarArraylist(notificaciones);
 
             }catch (Exception e){
                 System.out.println("Error en: "+e.getMessage());
@@ -64,21 +66,21 @@ public class ThirdFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("---- Essta en resume");
+        System.out.println("Tercer Fragmento---- Essta en resume");
 
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        System.out.println("---- Esta en STOP");
+        System.out.println("Tercer Fragmento---- Esta en STOP");
         onDestroyView();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("---- Se destruyo el view");
+        System.out.println("Tercer Fragmento---- Se destruyo el view");
     }
 
     @Override
@@ -86,20 +88,21 @@ public class ThirdFragment extends Fragment {
         super.onStart();
 
        // titular.setText("Estamos en pausa: "+i++);
-        System.out.println("---- Esta en START");
+        System.out.println("Tercer Fragmento---- Esta en START");
         mostrarTratamiento();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        System.out.println("Nos encontramos en onDetach ");
+        System.out.println("Tercer Fragmento Nos encontramos en onDetach ");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        System.out.println("Nos encontramos en onDestroy ");
+        System.out.println("Tercer Fragmento Nos encontramos en onDestroy ");
+        elements.clear();
     }
 
     @Override
@@ -148,7 +151,7 @@ public class ThirdFragment extends Fragment {
         elements.add(new ListElement(color,med,recor,status,cant));
     }
 */
-    public void mostrarTratamiento(){
+    private void mostrarTratamiento(){
         recyclerView_receta.setLayoutManager(new LinearLayoutManager(getContext()));
         ListAdapter listAdapter = new ListAdapter(elements, getContext());
         recyclerView_receta.setHasFixedSize(true);
@@ -163,19 +166,27 @@ public class ThirdFragment extends Fragment {
     }
 
 
-    public List<ListElement> getList (){
+    private List<ListElement> getList (){
         return elements;
     }
 
-    public void setElements (ListElement medicamentos){
+    private void setElements (ListElement medicamentos){
         if(medicamentos != null){
             Toast.makeText(getContext(), "Se agrego el medicamento :)", Toast.LENGTH_SHORT);
             elements.add(medicamentos);
         }
 
+    }
 
-
-
-
+    private void mostrarArraylist(ArrayList<String> medicinas){
+        int i=0;
+        if (medicinas.isEmpty()){
+            System.out.println("No hay ninguna notificacion :(");
+        }else{
+            for (i=0; i<medicinas.size();i++){
+                System.out.println(i+"Elemento: "+medicinas.get(i));
+                elements.add(new ListElement(medicinas.get(i)));
+            }
+        }
     }
 }
