@@ -14,6 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
 
+        <activity android:name=".Reset_ContrasenaActivity2"></activity>
+
         <activity android:name=".Add_Tratamiento"></activity>
         <activity android:name=".ImagesActivity" />
 
@@ -25,6 +27,7 @@
         <activity android:name=".Add_Tratamiento" />
 
         <activity android:name=".Reset_ContrasenaActivity2" />
+
         <activity android:name=".Receta.ModificarHorario.Mod_unavez" />
         <activity android:name=".Receta.Add_Medicina" />
         <activity android:name=".Receta.Add_Alarma" />

@@ -12,12 +12,15 @@ import android.widget.Toast;
 
 import com.example.tt_logging.Notas.Notas_Activity;
 import com.example.tt_logging.Persona_Cuidado.Add_PersonasHelp_Activity;
+
 import com.example.tt_logging.R;
 
 public class Add_Alarma extends AppCompatActivity {
 
+    private CardView add_medicina;
 
     private CardView add_medicina,add_nota,add_personaCuidad;
+
 
 
     @Override
@@ -38,6 +41,7 @@ public class Add_Alarma extends AppCompatActivity {
                 finish();
             }
         });
+
 
         add_nota.setOnClickListener(new View.OnClickListener() {
             @Override
