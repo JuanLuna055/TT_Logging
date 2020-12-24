@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#E4E4D7"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Notas.Notas_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agragar Nota"
+            android:textColor="#00B884"
+            android:textSize="40dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            ></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-Agrega una nota que sirva como recordatorio u observación dentro del tratamiento."
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:layout_marginBottom="20dp"
+            ></TextView>
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_margin="20dp"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:padding="20dp"
+        android:id="@+id/txtMulti_Nota"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_weight="1"
+        android:hint="Escribe aqui"
+        android:textSize="25dp"
+        android:textColor="#000000"
+        android:background="#FDD045"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
+
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/bonotesfinal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentEnd="true"
+        >
+        <Button
+            android:id="@+id/guradar_add_nota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#7400B8"
+            android:shadowColor="#7400B8"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="18dp"
+            android:text="Finalizar"
+            />
+    </LinearLayout>
+
+</LinearLayout>

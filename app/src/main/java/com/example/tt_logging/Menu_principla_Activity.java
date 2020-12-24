@@ -4,21 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.work.impl.model.Preference;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.tt_logging.Receta.ListElement;
 import com.example.tt_logging.Receta.ThirdFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -30,35 +36,76 @@ public class Menu_principla_Activity extends AppCompatActivity {
     SecondFragment secondFragment = new SecondFragment();
     ThirdFragment thirdFragment = new ThirdFragment();
     CuartoFragment cuartofragment = new CuartoFragment();
-    public List<ListElement> notificaciones = new ArrayList<>();;
     private boolean permiso;
     private String hora;
     private Bundle notificacion;
+    private String nota_recibida;
     private SharedPreferences preferences;
+    private ArrayList<String> ids_medicamentos = new ArrayList<>();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println("Menu principal: onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("Menu principal: onResumen");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("Menu principal: Destroy");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principla_);
-
+        System.out.println("Estamos en onCreate Activiti_principal");
         Bundle objeto = getIntent().getExtras();
         ListElement medicamento = null;
+        ids_medicamentos.clear();
+        //eliminarPreferencesMedicamentos();
+        int bandera =0;
+        // Obtenemos los Shareds con los datos Medicamento Notas persona de cuidado.
         if(objeto != null){
-            // llegada de horario
-            hora =  objeto.getString("horario");
-            System.out.println("|||°°°°°°°°Horario: "+ hora);
             medicamento = (ListElement) objeto.getSerializable("medicina");
-            notificaciones.add(medicamento);
-            System.out.println("|||||| El dato resivido es el siguiente:");
-            System.out.println("Medicamento: "+medicamento.getMedicamento()+" Status: "+medicamento.getStatus()+" Recordatorio: "+medicamento.getRecordatorio());
-            //loadFragment(thirdFragment);
-            preferences = getSharedPreferences("medicamento", Context.MODE_PRIVATE);
-            SharedPreferences.Editor obj = preferences.edit();
-            //obj.putString( )
+            if (medicamento != null){
+                // llegada de horario
+                hora =  objeto.getString("horario");
+                System.out.println("|||°°°°°°°°Horario: "+ hora);
+                // Obtenemos medicina
+                medicamento = (ListElement) objeto.getSerializable("medicina");
+                System.out.println("|||||| El dato resivido es el siguiente:");
+                System.out.println("Medicamento: "+medicamento.getMedicamento()+" Status: "+medicamento.getStatus()+" Recordatorio: "+medicamento.getRecordatorio());
+                leer_shared();
+                guardar_shared(medicamento.getId_medicamento());
+                mostrarMedicamentos(ids_medicamentos);
+                guardarArrayNotificaciones();
+                bandera = 1;
+            }
 
+            nota_recibida = objeto.getString("nota","sin nota");
+            if(nota_recibida != "sin nota"){
+                leer_shared_notas();
+                guardar_shared_Notas(nota_recibida);
+            }
+        }
+        if(bandera == 0){
+            guardarArrayNotificaciones();
+            mostrarMedicamentos(ids_medicamentos);
         }
 
+
+
+
+        // Enviamos los datos necesarios a los fraagmentos
         notificacion = new Bundle();
-        notificacion.putSerializable("notificacion",medicamento);
+        notificacion.putSerializable("notificacion", ids_medicamentos);
         thirdFragment.setArguments(notificacion);
 
         BottomNavigationView navegation = findViewById(R.id.bottom_navegation);
@@ -93,47 +140,107 @@ public class Menu_principla_Activity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void cargar_a_fichero(String id_notificacion){
-        String archivos [] = fileList();
 
-        if (ArchivoExiste(archivos, "receta.txt")){
-            try {
-                InputStreamReader archivo = new InputStreamReader(openFileInput("receta.txt"));
-                BufferedReader br = new BufferedReader(archivo);
-                String linea = br.readLine();
-                String recetaCompleta="";
-                while(linea != null){
-                    recetaCompleta = recetaCompleta + linea + "\n";
-                    linea = br.readLine();
-                    System.out.println("-R: "+linea);
-                }
-                br.close();
-                archivo.close();
-                System.out.println(recetaCompleta);
-            }catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+    private void guardar_shared(String id_med){
+        System.out.println("Guardaremos el medicamento");
+        SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        SharedPreferences.Editor miEditor = datos.edit();
+        boolean ans=true;
+        int i=0;
+        do {
+
+            if(datos.getString("id_med"+i,"error") == "error" ){
+                System.out.println("Se guardo el medicamento: id_med"+i);
+                miEditor.putString("id_med"+i,id_med);
+                miEditor.apply();
+                break;
+            }
+            //System.out.println("--valor de i: "+i);
+            i++;
+        }while (i<10);
+    }
+
+    private void leer_shared(){
+        SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        System.out.println("Leemos de Shared...");
+        int i=0;
+        do{
+            if(datos.getString("id_med"+i,"error") != "error"){
+                System.out.println("Se pudo leer el id_med"+i);
+            }
+            i++;
+        }while (i<10);
+    }
+
+    private void mostrarMedicamentos(ArrayList<String> medicinas){
+        int i=0;
+        if (medicinas.isEmpty()){
+            System.out.println("No hay ninguna medicina :(");
+        }else{
+            for (i=0; i<medicinas.size();i++){
+                System.out.println(i+"Elemento: "+medicinas.get(i));
             }
         }
-
     }
 
-    private boolean ArchivoExiste(String[] archivos, String nombreArchivo) {
-        for(int i=0; i<archivos.length;i++){
-            if(nombreArchivo.equals(archivos[i])){
-                return true;
+    public void guardarArrayNotificaciones(){
+        SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        System.out.println("Leemos de Shared...");
+        int i=0;
+        do{
+            if(datos.getString("id_med"+i,"error") != "error"){
+                System.out.println("Se pudo leer el id_med"+i);
+                ids_medicamentos.add(datos.getString("id_med"+i,"Sin medicamento"));
             }
-        }
-        return false;
+            System.out.println("Valor de i: "+i);
+            i++;
+        }while (i<10);
     }
 
-    public void Guardar_en_Archivo(View view, ListElement medicamento) throws FileNotFoundException {
-        OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("receta.txt", Activity.MODE_PRIVATE));
-        try {
-            archivo.write(medicamento.getId_medicamento());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void guardar_shared_Notas(String nota){
+        System.out.println("Guardaremos la nota");
+        SharedPreferences datos = getSharedPreferences("notas",MODE_PRIVATE);
+        SharedPreferences.Editor miEditor = datos.edit();
+        boolean ans=true;
+        int i=0;
+        do {
+
+            if(datos.getString("id_med"+i,"error") == "error" ){
+                System.out.println("Se guardo el no: id_nota"+i);
+                miEditor.putString("id_nota"+i,nota);
+                miEditor.apply();
+                break;
+            }
+            System.out.println("--valor de i: "+i);
+            i++;
+        }while (i<10);
     }
+
+    //VEMOS LOS DATOS QUE SE ENCUENTRA EN EL SHARED
+    private void leer_shared_notas(){
+        SharedPreferences datos = getSharedPreferences("notas",MODE_PRIVATE);
+        System.out.println("Leemos de Shared...");
+        int i=0;
+        do{
+            if(datos.getString("id_nota"+i,"error") != "error"){
+                System.out.println("Se pudo leer el id_nota"+i);
+            }
+            i++;
+        }while (i<10);
+    }
+
+    private void eliminarPreferencesMedicamentos(){
+        SharedPreferences datos = getSharedPreferences("notificaciones",MODE_PRIVATE);
+        SharedPreferences.Editor miEditor = datos.edit();
+        miEditor.clear();
+        miEditor.apply();
+    }
+
+    private void eliminarPreferencesNotas(){
+        SharedPreferences datos = getSharedPreferences("notas",MODE_PRIVATE);
+        SharedPreferences.Editor miEditor = datos.edit();
+        miEditor.clear();
+        miEditor.apply();
+    }
+
 }

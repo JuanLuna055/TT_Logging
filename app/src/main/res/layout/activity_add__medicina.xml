@@ -23,10 +23,10 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/amiko_bold"
         android:gravity="center"
-        android:background="#880743"
+        android:background="#2B0251"
         android:text="Medicamento"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -94,7 +94,7 @@
                 android:id="@+id/id_Spinner_frecuencia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#002AFF"
+                android:background="#FF6D00"
                 android:entries="@array/frecuncia_dias"
                 android:fadeScrollbars="false"
                 android:paddingTop="5dp"
@@ -129,7 +129,7 @@
             android:id="@+id/id_Spinner_repeticion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0040FF"
+            android:background="#FF6D00"
             android:entries="@array/Repeticiones"
             android:fadeScrollbars="false"
             android:paddingTop="10dp"
@@ -193,7 +193,7 @@
             android:layout_margin="10dp"
             android:textColor="#fff"
             android:text="Seleccionar fecha"
-            android:background="@color/colorPrimaryDark"
+            android:background="#FF9E00"
             ></Button>
 
     </LinearLayout>
@@ -222,7 +222,7 @@
             android:layout_margin="10dp"
             android:textColor="#fff"
             android:text="Seleccionar fecha"
-            android:background="@color/colorPrimaryDark"
+            android:background="#FF9E00"
             ></Button>
 
     </LinearLayout>
@@ -250,7 +250,6 @@
                     android:textStyle="bold" />
                 <FrameLayout
                         android:id="@+id/framecontainer_horario"
-                        android:background="#FFFFFF"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                     >
@@ -276,9 +275,7 @@
                     android:layout_marginStart="18dp"
                     android:shadowColor="#CD2323"
                     android:text="Modificar horario"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                     />
                 <Button
                     android:id="@+id/button_add_medi"
                     android:layout_width="match_parent"
@@ -288,9 +285,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="18dp"
                     android:text="Finalizar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                     />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

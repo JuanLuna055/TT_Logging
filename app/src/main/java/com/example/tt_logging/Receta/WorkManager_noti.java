@@ -108,7 +108,7 @@ public class WorkManager_noti extends Worker {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification = new NotificationCompat.Builder(getApplicationContext())
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_medical_services_black_24dp)
                 .setSound(soundUri)
                 .setAutoCancel(true)
                 .setContentTitle(t).setCategory(Notification.CATEGORY_SERVICE)
