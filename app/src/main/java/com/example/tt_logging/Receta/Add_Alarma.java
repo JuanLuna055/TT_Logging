@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import android.widget.Toast;
+
+
 import com.example.tt_logging.Notas.Notas_Activity;
 import com.example.tt_logging.Persona_Cuidado.Add_PersonasHelp_Activity;
 import com.example.tt_logging.R;
