@@ -15,6 +15,7 @@ public class ListElement implements Serializable {
     private Calendar termina;
     private String id_medicamento;
     private int repeticion;
+    private String horas_rec="";
 
     public String getId_medicamento() {
         return id_medicamento;
@@ -33,8 +34,9 @@ public class ListElement implements Serializable {
         cantidad = item.cantidad;
     }
 
+
     public ListElement(String color, String medicamento, String recordatorio, String status, int cantidad, Calendar inicio, Calendar terminal, ArrayList<String> hora,int repetir) {
-        this.color = "hola perro";
+        this.color = color;
         this.medicamento = medicamento;
         this.recordatorio = recordatorio;
         this.status = status;
@@ -42,9 +44,9 @@ public class ListElement implements Serializable {
         this.inicio = inicio;
         this.termina = terminal;
 
-        id_medicamento = medicamento+"-r"+recordatorio+"-s"+status+"-c"+cantidad+"-i"+repetir+"-a"+
-                inicio.get(Calendar.YEAR)+"m-"+inicio.get(Calendar.MONTH)+"-d"+inicio.get(Calendar.DAY_OF_MONTH)+"-h"+inicio.get(Calendar.HOUR_OF_DAY)+
-                "t-"+"a-"+terminal.get(Calendar.YEAR)+"m-"+terminal.get(Calendar.MONTH)+"-d"+terminal.get(Calendar.DAY_OF_MONTH);
+        id_medicamento = medicamento+"-"+recordatorio+"-"+status+"-"+cantidad+"-"+repetir+"-"+
+                inicio.get(Calendar.YEAR)+"-"+inicio.get(Calendar.MONTH)+"-"+inicio.get(Calendar.DAY_OF_MONTH)+"-"+inicio.get(Calendar.HOUR_OF_DAY)+
+                "-"+terminal.get(Calendar.YEAR)+"-"+terminal.get(Calendar.MONTH)+"-"+terminal.get(Calendar.DAY_OF_MONTH);
 
         switch (hora.size()){
             case 1:{
@@ -105,7 +107,130 @@ public class ListElement implements Serializable {
         }
     //  this.id_img = id_img;
     }
-/*
+
+    public ListElement(String id_medi){
+        int i=0;
+        int j=0;
+        color = "#000000";
+        inicio = Calendar.getInstance();
+        termina =Calendar.getInstance();
+        String dato = "";
+        int bandera = 0;
+        int bandera2 = 0;
+        do{
+            bandera=0;
+            do{
+
+                if(id_medi.charAt(i) == '-'){
+                    bandera=1;
+                    i++;
+                    j++;
+                }else{
+                    dato = dato + id_medi.charAt(i);
+                    i++;
+                }
+                if (id_medi.charAt(i) == '('){
+                    // System.out.println("Entramos a bandera");
+                    bandera2=1;
+                    bandera=1;
+                }
+            }while(bandera == 0);
+            switch (j){
+                case 1:{
+                    //Caso variable medicamento
+                    String medicina = dato;
+                    medicamento = medicina;
+                    //  System.out.println("Medicina es: "+dato);
+                    dato="";
+                    break;
+                }
+                case 2:{
+                    //Caso variable recordatorio
+                    String record = dato;
+                    recordatorio = record;
+                    //  System.out.println("recordatorio es: "+recordatorio);
+                    dato="";
+                    break;
+                }
+                case 3:{
+                    //Caso variable status
+                    status = dato;
+                    //  System.out.println("Cantidad es: "+status);
+                    dato="";
+                    break;
+                }
+                case 4:{
+                    //Caso variable repetir
+                    String cantid = dato;
+                    cantidad = Integer.parseInt(cantid);
+                    //   System.out.println("Repeticion es: "+ cantidad);
+                    dato="";
+                    break;
+                }
+                case 5:{
+                    //Caso variable repetir
+                    repeticion = Integer.parseInt(dato);
+                    //  System.out.println("Repeticion es: "+ repeticion);
+                    dato="";
+                    break;
+                }
+                case 6:{
+                    //Caso variable Año Fecha Inicio
+                    inicio.set(Calendar.YEAR,Integer.parseInt(dato));
+                    //  System.out.println("Medicina es: "+ inicio.get(Calendar.YEAR));
+                    dato="";
+                    break;
+                }
+                case 7:{
+                    //Caso variable Año Fecha Inicio
+                    inicio.set(Calendar.MONTH,Integer.parseInt(dato));
+                    //System.out.println("Medicina es: "+ inicio.get(Calendar.MONTH));
+                    dato="";
+                    break;
+                }
+                case 8:{
+                    //Caso variable Año Fecha Inicio
+                    inicio.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dato));
+                    //   System.out.println("Medicina es: "+ inicio.get(Calendar.DAY_OF_MONTH));
+                    dato="";
+                    break;
+                }
+                case 9:{
+                    //Caso variable Año Fecha Inicio
+                    termina.set(Calendar.YEAR,Integer.parseInt(dato));
+                    //  System.out.println("Medicina es: "+ inicio.get(Calendar.YEAR));
+                    dato="";
+                    break;
+                }
+                case 10:{
+                    //Caso variable Año Fecha Inicio
+                    termina.set(Calendar.MONTH,Integer.parseInt(dato));
+                    //  System.out.println("Medicina es: "+ inicio.get(Calendar.MONTH));
+                    dato="";
+                    break;
+                }
+                case 11:{
+                    //Caso variable Año Fecha Inicio
+                    termina.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dato));
+                    // System.out.println("Medicina es: "+ inicio.get(Calendar.DAY_OF_MONTH));
+                    dato="";
+                    break;
+                } default:{
+              //      System.out.println("Default"+id_medi.charAt(i));
+                    break;
+                }
+            }
+        }while(bandera2 != 1);
+        System.out.println("El ultimo termino es: "+ id_medi.charAt(i));
+        do{
+            horas_rec = horas_rec + id_medi.charAt(i);
+            //System.out.println(horas_rec);
+            i++;
+        }while (id_medi.charAt(i) != ']');
+        horas_rec = horas_rec + ']';
+    }
+
+    /*
     public int getId_img() {
         return id_img;
     }

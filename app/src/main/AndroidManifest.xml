@@ -3,6 +3,8 @@
     package="com.example.tt_logging">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
+
         <activity android:name=".Reset_ContrasenaActivity2"></activity>
+
+        <activity android:name=".Add_Tratamiento"></activity>
+        <activity android:name=".ImagesActivity" />
+
+        <activity android:name=".Persona_Cuidado.Add_PersonasHelp_Activity"></activity>
+        <activity android:name=".Ver_Notas_Activity" />
+        <activity android:name=".PersonasCuidado_Activity" />
+        <activity android:name=".Notas.Notas_Activity" />
+        <activity android:name=".Receta.ModificarHorario.Mod_DosVeces_Activity" />
+        <activity android:name=".Add_Tratamiento" />
+
+        <activity android:name=".Reset_ContrasenaActivity2" />
+
         <activity android:name=".Receta.ModificarHorario.Mod_unavez" />
         <activity android:name=".Receta.Add_Medicina" />
         <activity android:name=".Receta.Add_Alarma" />

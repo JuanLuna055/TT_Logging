@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="45dp"
+    android:layout_margin="15dp"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp"
+    app:cardUseCompatPadding="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFCC80"
+        android:padding="10dp"
+        >
+        <ImageView
+            android:id="@+id/iconImagenViewNota"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            app:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp"></ImageView>
+
+        <TextView
+            android:id="@+id/Titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Nota:"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"></TextView>
+
+
+        <TextView
+            android:id="@+id/nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_toRightOf="@+id/Titular"
+            android:layout_below="@id/Titulo"
+            android:text="Mensaje:"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"></TextView>
+        <TextView
+            android:id="@+id/fecha_nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_below="@+id/nota"
+            android:textColor="@android:color/black"
+            android:text="Creacion"
+            android:textStyle="italic"
+            android:textSize="18sp"
+            ></TextView>
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

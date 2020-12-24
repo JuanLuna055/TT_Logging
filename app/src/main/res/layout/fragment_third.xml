@@ -14,12 +14,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E48F06E3"
+            android:background="#00BFA5"
             android:orientation="horizontal">
 
             <ImageView
@@ -30,7 +31,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
-                app:srcCompat="@drawable/ic_person_white_24dp" />
+                app:srcCompat="@drawable/ic_person_white_24dp"
+                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:layout_width="match_parent"
