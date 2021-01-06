@@ -151,7 +151,7 @@ public class ListElement implements Serializable {
                     //Caso variable medicamento
                     String medicina = dato;
                     medicamento = medicina;
-                     System.out.println("Medicina es: "+dato);
+                    //System.out.println("Medicina es: "+dato);
                     dato="";
                     break;
                 }
@@ -159,14 +159,14 @@ public class ListElement implements Serializable {
                     //Caso variable recordatorio
                     String record = dato;
                     recordatorio = record;
-                      System.out.println("recordatorio es: "+recordatorio);
+                    //System.out.println("recordatorio es: "+recordatorio);
                     dato="";
                     break;
                 }
-                case 3:{
+                case 3: {
                     //Caso variable status
                     status = dato;
-                      System.out.println("Estatus es: "+status);
+                    //System.out.println("Estatus es: "+status);
                     dato="";
                     break;
                 }
@@ -174,42 +174,42 @@ public class ListElement implements Serializable {
                     //Caso variable repetir
                     String cantid = dato;
                     cantidad = Integer.parseInt(cantid);
-                       System.out.println("Cantidad es: "+ cantidad);
+                    //System.out.println("Cantidad es: "+ cantidad);
                     dato="";
                     break;
                 }
                 case 5:{
                     //Caso variable frecuncia
                     frecuencia = Integer.parseInt(dato);
-                      System.out.println("Frecuencia es: "+ frecuencia);
+                    //System.out.println("Frecuencia es: "+ frecuencia);
                     dato="";
                     break;
                 }
                 case 6:{
                     //Caso variable frecuncia
                     dosis_consumir = Integer.parseInt(dato);
-                    System.out.println("dosis a consumir es: "+ dosis_consumir);
+                    //System.out.println("dosis a consumir es: "+ dosis_consumir);
                     dato="";
                     break;
                 }
                 case 7:{
                     //Caso variable Año Fecha Inicio
                     inicio.set(Calendar.YEAR,Integer.parseInt(dato));
-                    System.out.println("Año de inicio es: "+ inicio.get(Calendar.YEAR));
+                    //System.out.println("Año de inicio es: "+ inicio.get(Calendar.YEAR));
                     dato="";
                     break;
                 }
                 case 8:{
                     //Caso variable Año Fecha Inicio
                     inicio.set(Calendar.MONTH,Integer.parseInt(dato));
-                    System.out.println("Mes de inicio es: "+ inicio.get(Calendar.MONTH));
+                    //System.out.println("Mes de inicio es: "+ inicio.get(Calendar.MONTH));
                     dato="";
                     break;
                 }
                 case 9:{
                     //Caso variable Año Fecha Inicio
                     inicio.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dato));
-                    System.out.println("dia de inicio es: "+ inicio.get(Calendar.DAY_OF_MONTH));
+                    //System.out.println("dia de inicio es: "+ inicio.get(Calendar.DAY_OF_MONTH));
                     dato="";
                     break;
                 }
@@ -217,22 +217,22 @@ public class ListElement implements Serializable {
                 case 10:{
                     //Caso variable Año Fecha Inicio
                     termina.set(Calendar.YEAR,Integer.parseInt(dato));
-                    System.out.println("Año de termino es: "+ termina.get(Calendar.YEAR));
+                    //System.out.println("Año de termino es: "+ termina.get(Calendar.YEAR));
                     dato="";
                     break;
                 }
                 case 11:{
                     //Caso variable Año Fecha Inicio
                     termina.set(Calendar.MONTH,Integer.parseInt(dato));
-                      System.out.println("mes de termino es: "+ termina.get(Calendar.MONTH));
+                      //System.out.println("mes de termino es: "+ termina.get(Calendar.MONTH));
                     dato="";
                     break;
                 }
                 case 12:{
                     //Caso variable Año Fecha Inicio
-                    System.out.println("Caso 11"+ dato);
+                    //System.out.println("Caso 11"+ dato);
                     termina.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dato));
-                     System.out.println("dia de termino: "+ termina.get(Calendar.DAY_OF_MONTH));
+                     //System.out.println("dia de termino: "+ termina.get(Calendar.DAY_OF_MONTH));
                     dato="";
                     break;
                 } default:{
@@ -241,10 +241,10 @@ public class ListElement implements Serializable {
                 }
             }
         }while(bandera2 != 1);
-        System.out.println("El ultimo termino es: "+ id_medi.charAt(i));
+        //System.out.println("El ultimo termino es: "+ id_medi.charAt(i));
         do{
             horas_rec = horas_rec + id_medi.charAt(i);
-            System.out.println(horas_rec);
+            //System.out.println(horas_rec);
             i++;
         }while (id_medi.charAt(i) != ']');
         horas_rec = horas_rec + ']';

@@ -64,6 +64,7 @@ public class Add_Medicina extends AppCompatActivity {
     private Calendar inicio, termino;
     private Calendar actual;
     int dia_inicio = 1;
+    int mes_inicio = 0;
 
     private ArrayList<String> horas;
 
@@ -140,6 +141,7 @@ public class Add_Medicina extends AppCompatActivity {
                         dia_inicio =d;
                         inicio.set(Calendar.DAY_OF_MONTH,d);
                         inicio.set(Calendar.MONTH,m);
+                        mes_inicio = m;
                         inicio.set(Calendar.YEAR,y);
                         inicio.set(Calendar.HOUR_OF_DAY,8);
                         inicio.set(Calendar.MINUTE,0);
@@ -197,6 +199,7 @@ public class Add_Medicina extends AppCompatActivity {
                 Generar_Alarmas(repeticion,inicio_copy,nom_medicamento.getText().toString(),recordato.getText().toString(),termina);
                 //medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Activo",Integer.parseInt(cantidad_dosis.getText().toString()),inicio,termino,horas,frecuncia);
                 inicio.set(Calendar.DAY_OF_MONTH,dia_inicio);
+                inicio.set(Calendar.MONTH,mes_inicio);
                 System.out.println("El id a enviar es: "+medicamento.getId_medicamento());
                 startActivity(intent);
             }

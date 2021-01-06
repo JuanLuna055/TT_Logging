@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.tt_logging.Menu_principla_Activity;
 import com.example.tt_logging.R;
 import com.example.tt_logging.Receta.ListElement;
+import com.example.tt_logging.Receta.WorkManager_noti;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -234,17 +235,16 @@ public class Mod_CuatroVeces_Activity extends AppCompatActivity {
         Long AlerTime;
         j=0;
         do{
-            tag = medicamento+"-a-"+fecha.get(Calendar.YEAR)+"m-"+fecha.get(Calendar.MONTH)+"-d"+fecha.get(Calendar.DAY_OF_MONTH)+"-h"+fecha.get(Calendar.HOUR_OF_DAY);
+            tag = medicamento+"a"+fecha.get(Calendar.YEAR)+"m"+fecha.get(Calendar.MONTH)+"d"+fecha.get(Calendar.DAY_OF_MONTH)+"h"+fecha.get(Calendar.HOUR_OF_DAY);
             System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
             AlerTime = fecha.getTimeInMillis() - System.currentTimeMillis();
             System.out.println("El tiempo para esta alarma es: "+AlerTime);
-            Data data = GuardarData("Es hora de tomar tu: "+medicamento,"Recomendacion: "+Detalles,10);
-            //WorkManager_noti.Guardarnoti(AlerTime,data,tag);
+            Data data = GuardarData("Es hora de tomar tu: "+medicamento,"Recomendacion: "+Detalles,tag);
+            WorkManager_noti.Guardarnoti(AlerTime,data,tag);
             if(this.medicamento.getFrecuencia() == 7){
                 fecha.setTime(sumarRestarMes(fecha.getTime(),1));
             }else{
                 fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),this.medicamento.getFrecuencia()+1));
-                j = j + this.medicamento.getFrecuencia()+1;
             }
             if (this.medicamento.getFrecuencia() == 0){
                 j++;
@@ -255,11 +255,11 @@ public class Mod_CuatroVeces_Activity extends AppCompatActivity {
 
     }
 
-    private Data GuardarData(String titulo, String detalle, int id_noti){
+    private Data GuardarData(String titulo, String detalle, String id_noti){
         return new Data.Builder()
                 .putString("titulo",titulo)
                 .putString("detalle",detalle)
-                .putInt("id_noti",id_noti).build();
+                .putString("id_noti",id_noti).build();
     }
 
     public Date sumarRestarDiasFecha(Date fecha, int dias){

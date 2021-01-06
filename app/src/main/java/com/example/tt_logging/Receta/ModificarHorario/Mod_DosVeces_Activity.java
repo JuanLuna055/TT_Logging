@@ -52,6 +52,7 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
         tvhora = findViewById(R.id.tv_hora);
         tvhora1 = findViewById(R.id.tv1_hora);
         guardar = findViewById(R.id.btn_guardar);
+        horas = new ArrayList<>();
 
         tvhora.setText(String.format("%02d:%02d",8,00));
 
@@ -165,20 +166,20 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
     public void Generar_Alarma (Calendar fecha, String medicamento, String Detalles,int fin){
         int j=0;
         String tag;
+        System.out.println("Termina en: "+fin);
         Long AlerTime;
             j=0;
         do{
-            tag = medicamento+"-a-"+fecha.get(Calendar.YEAR)+"m-"+fecha.get(Calendar.MONTH)+"-d"+fecha.get(Calendar.DAY_OF_MONTH)+"-h"+fecha.get(Calendar.HOUR_OF_DAY);
+            tag = medicamento+"a"+fecha.get(Calendar.YEAR)+"m"+fecha.get(Calendar.MONTH)+"d"+fecha.get(Calendar.DAY_OF_MONTH)+"h"+fecha.get(Calendar.HOUR_OF_DAY);
             System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
             AlerTime = fecha.getTimeInMillis() - System.currentTimeMillis();
             System.out.println("El tiempo para esta alarma es: "+AlerTime);
-            Data data = GuardarData("Es hora de tomar tu: "+medicamento,"Recomendacion: "+Detalles,10);
+            Data data = GuardarData("Es hora de tomar tu: "+medicamento,"Recomendacion: "+Detalles, tag);
             //WorkManager_noti.Guardarnoti(AlerTime,data,tag);
             if(this.medicamento.getFrecuencia() == 7){
                 fecha.setTime(sumarRestarMes(fecha.getTime(),1));
             }else{
                 fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),this.medicamento.getFrecuencia()+1));
-                j = j + this.medicamento.getFrecuencia()+1;
             }
             if (this.medicamento.getFrecuencia() == 0){
                 j++;
@@ -189,11 +190,11 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
 
     }
 
-    private Data GuardarData(String titulo, String detalle, int id_noti){
+    private Data GuardarData(String titulo, String detalle, String id_noti){
         return new Data.Builder()
                 .putString("titulo",titulo)
                 .putString("detalle",detalle)
-                .putInt("id_noti",id_noti).build();
+                .putString("id_noti",id_noti).build();
     }
 
     public Date sumarRestarDiasFecha(Date fecha, int dias){

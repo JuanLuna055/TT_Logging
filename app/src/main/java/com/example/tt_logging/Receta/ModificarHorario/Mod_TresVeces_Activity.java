@@ -202,7 +202,7 @@ public class Mod_TresVeces_Activity extends AppCompatActivity {
         Long AlerTime;
         j=0;
         do{
-            tag = medicamento+"-a-"+fecha.get(Calendar.YEAR)+"m-"+fecha.get(Calendar.MONTH)+"-d"+fecha.get(Calendar.DAY_OF_MONTH)+"-h"+fecha.get(Calendar.HOUR_OF_DAY);
+            tag = medicamento+"a"+fecha.get(Calendar.YEAR)+"m"+fecha.get(Calendar.MONTH)+"d"+fecha.get(Calendar.DAY_OF_MONTH)+"h"+fecha.get(Calendar.HOUR_OF_DAY);
             System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
             AlerTime = fecha.getTimeInMillis() - System.currentTimeMillis();
             System.out.println("El tiempo para esta alarma es: "+AlerTime);
@@ -212,7 +212,6 @@ public class Mod_TresVeces_Activity extends AppCompatActivity {
                 fecha.setTime(sumarRestarMes(fecha.getTime(),1));
             }else{
                 fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),this.medicamento.getFrecuencia()+1));
-                j = j + this.medicamento.getFrecuencia()+1;
             }
             if (this.medicamento.getFrecuencia() == 0){
                 j++;

@@ -129,7 +129,6 @@ public class FirstFragment extends Fragment {
 
 
         if (savedInstanceState != null){
-            System.out.println("Tenemos la info");
             titular.setText("Agregamos"+ getArguments().getString("medicina","hola"));
 
         }else {
@@ -184,7 +183,7 @@ public class FirstFragment extends Fragment {
 
     }
 
-    public Date sumarRestarDiasFecha(Date fecha, int dias){
+    private Date sumarRestarDiasFecha(Date fecha, int dias){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
         calendar.add(Calendar.DAY_OF_MONTH, dias);  // numero de horas a añadir, o restar en caso de horas<0

@@ -38,6 +38,7 @@ public class Descripcion_Medicina extends AppCompatActivity {
     private Button btn_eliminar, btn_regresar;
     private int cantidad_dosis;
     private ImageView icono_med;
+    private ListElement medicina;
     private ArrayList horas , minutos;
 
     @Override
@@ -45,7 +46,7 @@ public class Descripcion_Medicina extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_descripcion__medicina);
 
-        final ListElement medicina = (ListElement) getIntent().getSerializableExtra("medicina");
+        medicina = (ListElement) getIntent().getSerializableExtra("medicina");
         btn_eliminar = findViewById(R.id.button_eliminar_medicamento);
         icono_med = findViewById(R.id.Icono_midicina_perfil);
         medicamento = findViewById(R.id.txtView_medicina);
@@ -68,7 +69,7 @@ public class Descripcion_Medicina extends AppCompatActivity {
         color_Icono_Med();
         inicio.setText("Comienzo: "+medicina.getInicio().getTime().toString());
         termina.setText("Termina: "+medicina.getTermina().getTime().toString());
-        frecuncia.setText("Tomar: "+medicina.getFrecuencia()+1+" Cada dia");
+        frecuncia.setText("Tomar: "+(medicina.getFrecuencia()+1)+" Cada dia");
         repeticion.setText("Tomar: veces al dia: "+medicina.getFrecuencia());
         horario.setText("Horario alarmas: ["+medicina.getHoras_rec());
 
@@ -231,7 +232,7 @@ public class Descripcion_Medicina extends AppCompatActivity {
     private void EliminarNoti(String tag){
         System.out.println("Seacciono: ");
         WorkManager.getInstance(getApplicationContext()).cancelAllWorkByTag(tag);
-        Toast.makeText(Descripcion_Medicina.this,"Alarma Eliminada.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Descripcion_Medicina.this,"Alarma Eliminada.", Toast.LENGTH_SHORT).show();
 
     }
     public Date sumarRestarDiasFecha(Date fecha, int dias){

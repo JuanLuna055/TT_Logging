@@ -17,12 +17,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 public class Menu_principla_Activity extends AppCompatActivity {
-    FirstFragment firstFragment = new FirstFragment();
-    SecondFragment secondFragment = new SecondFragment();
-    ThirdFragment thirdFragment = new ThirdFragment();
-    CuartoFragment cuartofragment = new CuartoFragment();
+    private FirstFragment firstFragment = new FirstFragment();
+    private SecondFragment secondFragment = new SecondFragment();
+    private ThirdFragment thirdFragment = new ThirdFragment();
+    private CuartoFragment cuartofragment = new CuartoFragment();
     private boolean permiso;
     private String hora;
+    private ListElement medicamento = null;
     private Bundle notificacion;
     private String nota_recibida;
     private SharedPreferences preferences;
@@ -31,19 +32,16 @@ public class Menu_principla_Activity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        System.out.println("Menu principal: onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("Menu principal: onResumen");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.out.println("Menu principal: Destroy");
     }
 
     @Override
@@ -52,7 +50,6 @@ public class Menu_principla_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_principla_);
         System.out.println("Estamos en onCreate Activiti_principal");
         Bundle objeto = getIntent().getExtras();
-        ListElement medicamento = null;
         ids_medicamentos.clear();
         //eliminarPreferencesMedicamentos();
         int bandera =0;
