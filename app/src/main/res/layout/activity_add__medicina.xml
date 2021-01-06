@@ -142,6 +142,39 @@
             android:textDirection="firstStrong"></Spinner>
     </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/amiko_bold"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Cantidad de dosis que cuentas:"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/edt_cantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/textview_border"
+                android:inputType="number"
+                android:hint="10 dosis"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#000000" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textView7"
@@ -264,6 +297,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp"
+                android:paddingBottom="20dp"
                 android:gravity="bottom"
                 android:layout_alignParentEnd="true"
                 >

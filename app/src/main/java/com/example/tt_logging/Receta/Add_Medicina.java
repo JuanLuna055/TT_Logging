@@ -19,6 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.tt_logging.Menu_principla_Activity;
 import com.example.tt_logging.R;
+import com.example.tt_logging.Receta.ModificarHorario.Mod_CincoVeces_Activity;
+import com.example.tt_logging.Receta.ModificarHorario.Mod_CuatroVeces_Activity;
+import com.example.tt_logging.Receta.ModificarHorario.Mod_DosVeces_Activity;
+import com.example.tt_logging.Receta.ModificarHorario.Mod_SeisVeces_Activity;
+import com.example.tt_logging.Receta.ModificarHorario.Mod_TresVeces_Activity;
 import com.example.tt_logging.Receta.ModificarHorario.Mod_unavez;
 import com.example.tt_logging.Receta.repeticiones.Cinco_Veces_Fragment;
 import com.example.tt_logging.Receta.repeticiones.Diez_Veces_Fragment;
@@ -44,7 +49,7 @@ import java.util.List;
 public class Add_Medicina extends AppCompatActivity {
 
     //Obtener la info del XML
-    private EditText nom_medicamento, recordato;
+    private EditText nom_medicamento, recordato, cantidad_dosis;
     private int frecuncia, repeticion;
     private TextView fecha_inicio, fecha_final;
     private VeintiCuatro_Veces_Fragment v24;
@@ -56,7 +61,9 @@ public class Add_Medicina extends AppCompatActivity {
     private Button selefecha_inicio , selefecha_final;
     private Spinner spinner_frecuncia;
     private Spinner spinner_veces;
-    private Calendar inicio, termino;private Calendar actual;
+    private Calendar inicio, termino;
+    private Calendar actual;
+    int dia_inicio = 1;
 
     private ArrayList<String> horas;
 
@@ -64,11 +71,12 @@ public class Add_Medicina extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__medicina);
-
+        bundle = new Bundle();
         una = new unavez_Fragment();
         loadFragment(una);
         nom_medicamento = (EditText) findViewById(R.id.Txt_medic);
         recordato = (EditText) findViewById(R.id.edt_recordatorio);
+        cantidad_dosis = findViewById(R.id.edt_cantidad);
         btn_modHorario = (Button) findViewById(R.id.btn_horario);
         bundle = new Bundle();
         selefecha_final = (Button) findViewById(R.id.btn_selefecha_final);
@@ -78,6 +86,7 @@ public class Add_Medicina extends AppCompatActivity {
         actual = Calendar.getInstance();
         inicio = Calendar.getInstance();
         termino = Calendar.getInstance();
+
         horas = new ArrayList<>();
         i=0;
 
@@ -128,7 +137,7 @@ public class Add_Medicina extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-
+                        dia_inicio =d;
                         inicio.set(Calendar.DAY_OF_MONTH,d);
                         inicio.set(Calendar.MONTH,m);
                         inicio.set(Calendar.YEAR,y);
@@ -180,13 +189,15 @@ public class Add_Medicina extends AppCompatActivity {
                     termina = -termina;
                 }
                 System.out.println("Termina en dias:"+termina);
-                Generar_Alarmas(repeticion,inicio,nom_medicamento.getText().toString(),recordato.getText().toString(),termina);
-                Toast.makeText(Add_Medicina.this, "Estamos por ebvari medicina", Toast.LENGTH_SHORT).show();
-                medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Cantidad:",i++,inicio,termino,horas,repeticion);
+                medicamento = new ListElement("#F48888",""+nom_medicamento.getText().toString(),""+recordato.getText().toString(),"Activo",Integer.parseInt(cantidad_dosis.getText().toString()),inicio,termino,horas,frecuncia);
                 Intent intent = new Intent(Add_Medicina.this, Menu_principla_Activity.class);
-                bundle = new Bundle();
                 bundle.putSerializable("medicina",medicamento);
                 intent.putExtras(bundle);
+                Calendar inicio_copy = inicio;
+                Generar_Alarmas(repeticion,inicio_copy,nom_medicamento.getText().toString(),recordato.getText().toString(),termina);
+                //medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Activo",Integer.parseInt(cantidad_dosis.getText().toString()),inicio,termino,horas,frecuncia);
+                inicio.set(Calendar.DAY_OF_MONTH,dia_inicio);
+                System.out.println("El id a enviar es: "+medicamento.getId_medicamento());
                 startActivity(intent);
             }
         });
@@ -195,10 +206,11 @@ public class Add_Medicina extends AppCompatActivity {
         btn_modHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (nom_medicamento.getText().length() > 0){
                     System.out.println("----> Se ingreso el mediccamento: "+nom_medicamento.getText().toString()+" Con recordatorio: "+recordato.getText().toString());
-                    medicamento = new ListElement("#F48888",""+nom_medicamento.getText().toString(),""+recordato.getText().toString(),"Cantidad",i++,inicio,termino,horas,repeticion);
-                    modifica_horario(medicamento,frecuncia,repeticion);
+                    medicamento = new ListElement("#F48888",""+nom_medicamento.getText().toString(),""+recordato.getText().toString(),"Activo",Integer.parseInt(cantidad_dosis.getText().toString()),inicio,termino,horas,frecuncia);
+                    modifica_horario(medicamento,repeticion,frecuncia);
                 }else{
                     Toast.makeText(getApplicationContext(),"Llenar todos los datos.",Toast.LENGTH_SHORT).show();
                 }
@@ -300,29 +312,50 @@ public class Add_Medicina extends AppCompatActivity {
                 break;
             }
             case 1:{
-                //Caso una al dos
-                Dos_Veces_Fragment dos_pastilla = new Dos_Veces_Fragment();
-                loadFragment(dos_pastilla);
+                //Caso una al dia
+                Intent intent = new Intent(Add_Medicina.this, Mod_DosVeces_Activity.class);
+                bundle = new Bundle();
+                bundle.putSerializable("medicina",medicamentoenv);
+                bundle.putInt("periodo",periodo);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             }case 2:{
-                //Caso una al tres
-                Tres_Veces_Fragment tres_pastilla = new Tres_Veces_Fragment();
-                loadFragment(tres_pastilla);
+                //Caso una al dia
+                Intent intent = new Intent(Add_Medicina.this, Mod_TresVeces_Activity.class);
+                bundle = new Bundle();
+                bundle.putSerializable("medicina",medicamentoenv);
+                bundle.putInt("periodo",periodo);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             }case 3:{
-                //Caso una al cuatro
-                cuatro_Veces_Fragment cuatro_pastilla = new cuatro_Veces_Fragment();
-                loadFragment(cuatro_pastilla);
+                //Caso una al dia
+                Intent intent = new Intent(Add_Medicina.this, Mod_CuatroVeces_Activity.class);
+                bundle = new Bundle();
+                bundle.putSerializable("medicina",medicamentoenv);
+                bundle.putInt("periodo",periodo);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             }case 4:{
                 //Caso una al dia
-                Cinco_Veces_Fragment cinco_pastilla = new Cinco_Veces_Fragment();
-                loadFragment(cinco_pastilla);
+                //Caso una al dia
+                Intent intent = new Intent(Add_Medicina.this, Mod_CincoVeces_Activity.class);
+                bundle = new Bundle();
+                bundle.putSerializable("medicina",medicamentoenv);
+                bundle.putInt("periodo",periodo);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             }case 5:{
                 //Caso una al dia
-                Seis_Veces_Fragment seis_pastilla = new Seis_Veces_Fragment();
-                loadFragment(seis_pastilla);
+                Intent intent = new Intent(Add_Medicina.this, Mod_SeisVeces_Activity.class);
+                bundle = new Bundle();
+                bundle.putSerializable("medicina",medicamentoenv);
+                bundle.putInt("periodo",periodo);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             }case 6:{
                 //Caso una al dia
@@ -506,37 +539,47 @@ public class Add_Medicina extends AppCompatActivity {
         }
     }
 
-    public void alarmas_establecidas (Calendar fecha, String medicamento, String Detalles,int fin){
+    private void alarmas_establecidas (Calendar fecha, String medicamento, String Detalles,int fin){
         int j=0;
         String tag;
         Long AlerTime;
-        if (frecuncia == 7){
-            frecuncia =1;
-        }else{
-            frecuncia++;
-        }
+        int frecu = frecuncia;
             j=0;
             do{
+                System.out.println("Inicio dentro de ala_esta 1: "+inicio.getTime().toString());
                 tag = medicamento+"a"+fecha.get(Calendar.YEAR)+"m"+fecha.get(Calendar.MONTH)+"d"+fecha.get(Calendar.DAY_OF_MONTH)+"h"+fecha.get(Calendar.HOUR_OF_DAY);
                 System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
                 AlerTime = fecha.getTimeInMillis() - System.currentTimeMillis();
                 System.out.println("El tiempo para esta alarma es: "+AlerTime);
-                Data data = GuardarData(medicamento,Detalles,10);
-                //WorkManager_noti.Guardarnoti(AlerTime,data,tag);
-                fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),frecuncia));
-                j=j+frecuncia;
-            }while(j <= fin);
+                Data data = GuardarData("Es hora de tomar tu: "+medicamento,"Recomendacion: "+Detalles,""+tag);
+                System.out.println("Inicio dentro de ala_esta 2: "+inicio.getTime().toString());
+                WorkManager_noti.Guardarnoti(AlerTime,data,tag);
+                System.out.println("Inicio dentro de ala_esta: 3"+inicio.getTime().toString());
+                if( frecuncia == 7){
+                    fecha.setTime(sumarRestarMes(fecha.getTime(),1));
+                    System.out.println("Inicio dentro de ala_esta 4: "+inicio.getTime().toString());
+                }else{
+                    fecha.setTime(sumarRestar_DiasFecha(fecha.getTime(),frecuncia+1));
+                    System.out.println("Inicio dentro de ala_esta 5: "+inicio.getTime().toString());
+                }
+                if (frecuncia == 0){
+                    j++;
+                }else{
+                    j=j+frecuncia+1;
+                }
+
+            }while(j < fin);
 
     }
 
-    private Data GuardarData(String titulo, String detalle, int id_noti){
+    private Data GuardarData(String titulo, String detalle, String id_noti){
         return new Data.Builder()
                 .putString("titulo",titulo)
                 .putString("detalle",detalle)
-                .putInt("id_noti",id_noti).build();
+                .putString("id_noti",id_noti).build();
     }
 
-    public Date sumarRestarDiasFecha(Date fecha, int dias){
+    private Date sumarRestar_DiasFecha(Date fecha, int dias){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
         calendar.add(Calendar.DAY_OF_MONTH, dias);  // numero de horas a añadir, o restar en caso de horas<0
@@ -549,6 +592,7 @@ public class Add_Medicina extends AppCompatActivity {
                 //(8-0)]");
                 fecha.set(Calendar.HOUR_OF_DAY,8);
                 fecha.set(Calendar.MINUTE,0);
+                System.out.println("Inicio dentro de Generar alarma= "+inicio.get(Calendar.DAY_OF_MONTH));
                 alarmas_establecidas(fecha,medicamento,detalles,fin);
                 break;
             }
@@ -904,6 +948,13 @@ public class Add_Medicina extends AppCompatActivity {
                 break;
             } default: break;
         }
+    }
+
+    public Date sumarRestarMes(Date fecha, int mes){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha); // Configuramos la fecha que se recibe
+        calendar.add(Calendar.MONTH, mes);  // numero de horas a añadir, o restar en caso de horas<0
+        return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
     }
 
 }

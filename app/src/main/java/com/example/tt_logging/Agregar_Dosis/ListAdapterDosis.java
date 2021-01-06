@@ -1,4 +1,4 @@
-package com.example.tt_logging.Receta;
+package com.example.tt_logging.Agregar_Dosis;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,15 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tt_logging.R;
+import com.example.tt_logging.Receta.ListElement;
 
 import java.util.List;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class ListAdapterDosis extends RecyclerView.Adapter<ListAdapterDosis.ViewHolder> {
 
     private List<ListElement> mData;
     private LayoutInflater mInflater;
     private Context context;
-    final ListAdapter.OnItemClickListener listener;
+    final ListAdapterDosis.OnItemClickListener listener;
     //listener
 
     public interface OnItemClickListener{
@@ -32,7 +33,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     //private View.OnClickListener listener;
     //private Context context;
 
-    public ListAdapter(List<ListElement> itemsList, Context context, ListAdapter.OnItemClickListener listener){
+    public ListAdapterDosis(List<ListElement> itemsList, Context context, ListAdapterDosis.OnItemClickListener listener){
         mInflater = LayoutInflater.from(context);
         this.context = context;
         mData = itemsList;
@@ -42,20 +43,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.list_element,parent,false);
+        View view = mInflater.inflate(R.layout.list_dosis,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListAdapterDosis.ViewHolder holder, int position) {
         String medicina = mData.get(position).getMedicamento();
-        String recordatorio = mData.get(position).getRecordatorio();
         String status = mData.get(position).getStatus();
+        String cantidad =""+mData.get(position).getCantidad();
         holder.medicamento.setText(medicina);
-        holder.recordatorio.setText(recordatorio);
+        holder.cantidad.setText(cantidad);
         holder.status.setText(status);
         //holder.iconImagen.setColorFilter();
         holder.bindData(mData.get(position));
+        System.out.println("Posicion escogida es: "+position);
     }
 
     @Override
@@ -66,20 +68,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView iconImagen;
-        TextView medicamento, recordatorio, status;
+        TextView medicamento, cantidad, status;
 
         public ViewHolder (View itemView){
             super(itemView);
-            iconImagen =(ImageView) itemView.findViewById(R.id.iconImagenView);
-            medicamento = (TextView)itemView.findViewById(R.id.name_medicamento);
-            recordatorio =(TextView) itemView.findViewById(R.id.recordatorio);
-            status = (TextView) itemView.findViewById(R.id.statusView);
+            iconImagen =(ImageView) itemView.findViewById(R.id.iconImagenViewdosis);
+            medicamento = (TextView)itemView.findViewById(R.id.name_medicamento_dosis);
+            cantidad =(TextView) itemView.findViewById(R.id.Cantidad_View_dosis);
+            status = (TextView) itemView.findViewById(R.id.Status_dosis);
         }
 
         void bindData(final ListElement item){
             iconImagen.setColorFilter(Color.parseColor(item.getColor()), PorterDuff.Mode.SRC_IN);
             medicamento.setText(item.getMedicamento());
-            recordatorio.setText(item.getRecordatorio());
+            cantidad.setText("Cantidad: "+item.getCantidad());
             status.setText(item.getStatus());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

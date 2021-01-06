@@ -21,19 +21,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Mod_DosVeces_Activity extends AppCompatActivity {
+public class Mod_TresVeces_Activity extends AppCompatActivity {
 
-    // Dos alarmas
+    // TRES alarmas
 
-    private Button selehora, selehora1;
-    private TextView tvhora, tvhora1;
+    private Button selehora, selehora1, selehora2;
+    private TextView tvhora, tvhora1,tvhora2;
 
     private Calendar actual = Calendar.getInstance();
     private Calendar calendar = Calendar.getInstance();
     private Calendar calendar1 = Calendar.getInstance();
-    Button guardar;
+    private Calendar calendar2 = Calendar.getInstance();
+    private Button guardar;
     //Seleccionar Fechaprivate int minutos, hora;
-    private int minutos, hora, minutos1, hora1;
+    private int minutos, hora, minutos1, hora1, minutos2, hora2;
     private List<ListElement> notifi_med = new ArrayList<>();;
     private  ListElement medicamento;
     int periodo;
@@ -45,13 +46,17 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mod__dos_veces_);
+        setContentView(R.layout.activity_mod__tes_veces);
 
         selehora = findViewById(R.id.btn_selehora);
-        selehora1 = findViewById(R.id.btn2_selehora);
+        selehora1 = findViewById(R.id.btn1_selehora);
+        selehora2 = findViewById(R.id.btn2_selehora);
+
         tvhora = findViewById(R.id.tv_hora);
         tvhora1 = findViewById(R.id.tv1_hora);
+        tvhora2 = findViewById(R.id.tv2_hora);
         guardar = findViewById(R.id.btn_guardar);
+        horas = new ArrayList<>();
 
         tvhora.setText(String.format("%02d:%02d",8,00));
 
@@ -127,6 +132,28 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
             }
         });
 
+        //Selecciona hora 3
+        selehora2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hora2= actual.get(Calendar.HOUR_OF_DAY);
+                minutos2 = actual.get(Calendar.MINUTE);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int h, int m) {
+                        System.out.println("la hora seleccionada es: " + h);
+                        System.out.println("Munitos seleccionados: " + m);
+                        calendar.set(Calendar.HOUR_OF_DAY, h);
+                        calendar.set(Calendar.MINUTE, m);
+                        hora2=h;
+                        minutos2=m;
+                        tvhora2.setText(String.format("%02d:%02d", h, m));
+                        System.out.println(calendar.getTime().toString());
+                    }
+                }, hora2, minutos2, true);
+                timePickerDialog.show();
+            }
+        });
         //Seleccionar guardar
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,13 +171,20 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
                 calendar1.set(Calendar.MINUTE, minutos1);
                 System.out.println(calendar1.getTime().toString());
                 Generar_Alarma(calendar1,medicamento.getMedicamento(),medicamento.getRecordatorio(),termina);
+                //Tercer Alarma
+                calendar2.set(inicio.get(Calendar.YEAR),inicio.get(Calendar.MONTH),inicio.get(Calendar.DAY_OF_MONTH),actual.get(Calendar.HOUR_OF_DAY),actual.get(Calendar.MINUTE));
+                calendar2.set(Calendar.HOUR_OF_DAY, hora2);
+                calendar2.set(Calendar.MINUTE, minutos2);
+                System.out.println(calendar2.getTime().toString());
+                Generar_Alarma(calendar2,medicamento.getMedicamento(),medicamento.getRecordatorio(),termina);
 
                 //Este tag donde haremos gua de la notifcacion
                 Toast.makeText(getApplicationContext(), "Alarma guardada.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Mod_DosVeces_Activity.this, Menu_principla_Activity.class);
+                Intent intent = new Intent(Mod_TresVeces_Activity.this, Menu_principla_Activity.class);
                 Bundle bundle = new Bundle();
                 horas.add("("+hora+"-"+minutos+")");
-                horas.add("("+hora1+"-"+minutos1+")]");
+                horas.add("("+hora1+"-"+minutos1+")");
+                horas.add("("+hora2+"-"+minutos2+")]");
                 //medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Cantidad:",i++,inicio,termino,horas,repeticion);
                 ListElement medicamento_mod = new ListElement(medicamento.getColor(), medicamento.getMedicamento(), medicamento.getRecordatorio(), "cantidad:", 10, medicamento.getInicio(), medicamento.getTermina(), horas, medicamento.getFrecuencia());
                 bundle.putSerializable("medicina",medicamento_mod);
@@ -166,7 +200,7 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
         int j=0;
         String tag;
         Long AlerTime;
-            j=0;
+        j=0;
         do{
             tag = medicamento+"-a-"+fecha.get(Calendar.YEAR)+"m-"+fecha.get(Calendar.MONTH)+"-d"+fecha.get(Calendar.DAY_OF_MONTH)+"-h"+fecha.get(Calendar.HOUR_OF_DAY);
             System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
@@ -183,7 +217,7 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
             if (this.medicamento.getFrecuencia() == 0){
                 j++;
             }else {
-               j = j+this.medicamento.getFrecuencia() + 1;
+                j = j+this.medicamento.getFrecuencia() + 1;
             }
         }while(j <= fin);
 

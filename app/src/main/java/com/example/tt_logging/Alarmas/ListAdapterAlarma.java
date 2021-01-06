@@ -1,4 +1,4 @@
-package com.example.tt_logging.Receta;
+package com.example.tt_logging.Alarmas;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,41 +13,40 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tt_logging.R;
+import com.example.tt_logging.Receta.ListElement;
 
 import java.util.List;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class ListAdapterAlarma extends RecyclerView.Adapter<com.example.tt_logging.Alarmas.ListAdapterAlarma.ViewHolder> implements  View.OnClickListener{
 
     private List<ListElement> mData;
     private LayoutInflater mInflater;
-    private Context context;
-    final ListAdapter.OnItemClickListener listener;
+
     //listener
-
-    public interface OnItemClickListener{
-        void OnItemClick(ListElement item);
-    }
-
     // Commit 2
-    //private View.OnClickListener listener;
+    private View.OnClickListener listener;
     //private Context context;
 
-    public ListAdapter(List<ListElement> itemsList, Context context, ListAdapter.OnItemClickListener listener){
+    public ListAdapterAlarma(List<ListElement> itemsList, Context context){
         mInflater = LayoutInflater.from(context);
-        this.context = context;
+        //  this.context = context;
         mData = itemsList;
-        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.list_element,parent,false);
+        View view = mInflater.inflate(R.layout.list_alarma,parent,false);
+        view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
+    public void setOnClickListener(View.OnClickListener Listener){
+        this.listener = listener;
+    }
+
     @Override
-    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull com.example.tt_logging.Alarmas.ListAdapterAlarma.ViewHolder holder, int position) {
         String medicina = mData.get(position).getMedicamento();
         String recordatorio = mData.get(position).getRecordatorio();
         String status = mData.get(position).getStatus();
@@ -63,6 +62,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return mData.size();
     }
 
+    @Override
+    public void onClick(View view) {
+        if(listener != null){
+            listener.onClick(view);
+        }
+
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView iconImagen;
@@ -70,7 +76,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         public ViewHolder (View itemView){
             super(itemView);
-            iconImagen =(ImageView) itemView.findViewById(R.id.iconImagenView);
+            iconImagen =(ImageView) itemView.findViewById(R.id.iconImagenViewAlarm);
             medicamento = (TextView)itemView.findViewById(R.id.name_medicamento);
             recordatorio =(TextView) itemView.findViewById(R.id.recordatorio);
             status = (TextView) itemView.findViewById(R.id.statusView);
@@ -81,12 +87,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             medicamento.setText(item.getMedicamento());
             recordatorio.setText(item.getRecordatorio());
             status.setText(item.getStatus());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.OnItemClick(item);
-                }
-            });
         }
     }
 }

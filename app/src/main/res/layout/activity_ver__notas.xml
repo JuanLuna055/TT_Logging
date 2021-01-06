@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#DDDDDF"
-    tools:context=".Ver_Notas_Activity">
+    tools:context=".Notas.Ver_Notas_Activity">
 
     <TextView
         android:id="@+id/textView_titular"

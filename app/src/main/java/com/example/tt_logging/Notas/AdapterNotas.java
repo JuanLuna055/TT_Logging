@@ -1,4 +1,4 @@
-package com.example.tt_logging;
+package com.example.tt_logging.Notas;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,12 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tt_logging.Notas.Notas;
-import com.example.tt_logging.Persona_Cuidado.ListPersonaCuidado;
+import com.example.tt_logging.R;
 
 import java.util.List;
 
-import io.reactivex.subscribers.SafeSubscriber;
 
 public class AdapterNotas extends RecyclerView.Adapter<AdapterNotas.ViewHolder> implements View.OnClickListener {
     List<Notas> model;

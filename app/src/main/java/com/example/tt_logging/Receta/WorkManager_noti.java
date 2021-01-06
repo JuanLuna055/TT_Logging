@@ -8,9 +8,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -22,6 +24,7 @@ import androidx.work.WorkerParameters;
 
 import com.example.tt_logging.Menu_principla_Activity;
 import com.example.tt_logging.R;
+import com.example.tt_logging.Receta.repeticiones.Recepcion_Activity;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -57,20 +60,23 @@ public class WorkManager_noti extends Worker {
 
         String titulo = getInputData().getString("titulo");
         String detalle = getInputData().getString("detalle");
-        int id = (int) getInputData().getLong("idnoti",0);
-        oreo(titulo,detalle);
+        String id =  getInputData().getString("id_noti");
+        oreo(titulo,detalle,id);
         System.out.println("Se ejecuto la alarma: "+titulo+" Detalle: "+detalle+" Id: "+id);
         return Result.success();
     }
 
     // t= titulo y d = detalle
-    public void oreo(String t, String d){
+    public void oreo(String t, String d, String id_listelement){
         String id = "messange";
 
         NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),id);
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        Intent intent = new Intent(getApplicationContext(), Menu_principla_Activity.class);
+        Intent intent = new Intent(getApplicationContext(), Recepcion_Activity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("medicina",id_listelement);
+        intent.putExtras(bundle);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel nc = new NotificationChannel(id,"nuevo",NotificationManager.IMPORTANCE_HIGH);
@@ -110,10 +116,12 @@ public class WorkManager_noti extends Worker {
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_medical_services_black_24dp)
                 .setSound(soundUri)
+                .setColor(Color.BLUE)
+                .setVibrate(new long[]{1000,1000,1000,1000})
                 .setAutoCancel(true)
                 .setContentTitle(t).setCategory(Notification.CATEGORY_SERVICE)
                 .setContentText(d).build();
-        nm.notify(1,notification);
+        nm.notify(123,notification);
 
         System.out.println("Bandera 2");
     }

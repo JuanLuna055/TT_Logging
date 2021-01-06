@@ -9,13 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
-import com.example.tt_logging.Receta.Add_Alarma;
-import com.example.tt_logging.Receta.Add_Medicina;
-
-import java.util.List;
-
+import com.example.tt_logging.Notas.Ver_Notas_Activity;
+import com.example.tt_logging.Persona_Cuidado.PersonasCuidado_Activity;
 
 
 /// Fragment de usuario

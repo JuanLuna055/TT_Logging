@@ -54,7 +54,7 @@ public class Add_PersonasHelp_Activity extends AppCompatActivity {
     }
 
     private void guardar_shared_PersonaHelp(String persona){
-        System.out.println("Guardaremos la nota");
+        System.out.println("Guardaremos la Persona");
         SharedPreferences datos = getSharedPreferences("persona_help",MODE_PRIVATE);
         SharedPreferences.Editor miEditor = datos.edit();
         boolean ans=true;
