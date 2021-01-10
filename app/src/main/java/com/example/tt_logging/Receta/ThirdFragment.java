@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tt_logging.R;
+import com.example.tt_logging.Receta.repeticiones.Descripcion_Medicina;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,18 +154,22 @@ public class ThirdFragment extends Fragment {
 */
     private void mostrarTratamiento(){
         recyclerView_receta.setLayoutManager(new LinearLayoutManager(getContext()));
-        ListAdapter listAdapter = new ListAdapter(elements, getContext());
-        recyclerView_receta.setHasFixedSize(true);
-        recyclerView_receta.setAdapter(listAdapter);
-        listAdapter.setOnClickListener(new View.OnClickListener() {
+        ListAdapter listAdapter = new ListAdapter(elements, getContext(), new ListAdapter.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                String medicamento = elements.get(recyclerView_receta.getChildAdapterPosition(view)).getMedicamento();
-                Toast.makeText(getContext(), "Medicamento: "+medicamento, Toast.LENGTH_SHORT).show();
+            public void OnItemClick(ListElement item) {
+                moveToDescription(item);
             }
         });
+        recyclerView_receta.setHasFixedSize(true);
+        recyclerView_receta.setAdapter(listAdapter);
+
     }
 
+    public void moveToDescription(ListElement item){
+        Intent intent = new Intent(getContext(), Descripcion_Medicina.class);
+        intent.putExtra("medicina",item);
+        startActivity(intent);
+    }
 
     private List<ListElement> getList (){
         return elements;

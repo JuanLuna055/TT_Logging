@@ -16,32 +16,34 @@ import com.example.tt_logging.R;
 
 import java.util.List;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> implements  View.OnClickListener{
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     private List<ListElement> mData;
     private LayoutInflater mInflater;
-
+    private Context context;
+    final ListAdapter.OnItemClickListener listener;
     //listener
+
+    public interface OnItemClickListener{
+        void OnItemClick(ListElement item);
+    }
+
     // Commit 2
-    private View.OnClickListener listener;
+    //private View.OnClickListener listener;
     //private Context context;
 
-    public ListAdapter(List<ListElement> itemsList, Context context){
+    public ListAdapter(List<ListElement> itemsList, Context context, ListAdapter.OnItemClickListener listener){
         mInflater = LayoutInflater.from(context);
-        //  this.context = context;
+        this.context = context;
         mData = itemsList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_element,parent,false);
-        view.setOnClickListener(this);
         return new ViewHolder(view);
-    }
-
-    public void setOnClickListener(View.OnClickListener Listener){
-        this.listener = listener;
     }
 
     @Override
@@ -61,13 +63,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         return mData.size();
     }
 
-    @Override
-    public void onClick(View view) {
-        if(listener != null){
-            listener.onClick(view);
-        }
-
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView iconImagen;
@@ -86,6 +81,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             medicamento.setText(item.getMedicamento());
             recordatorio.setText(item.getRecordatorio());
             status.setText(item.getStatus());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.OnItemClick(item);
+                }
+            });
         }
     }
 }

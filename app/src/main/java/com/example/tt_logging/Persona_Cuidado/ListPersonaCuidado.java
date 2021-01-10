@@ -42,6 +42,7 @@ public class ListPersonaCuidado {
                 if (id_persona.charAt(i) == '/') {
                     bandera2 = 1;
                     bandera = 1;
+                    j++;
                 }
             }while (bandera == 0);
 

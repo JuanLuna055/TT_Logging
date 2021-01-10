@@ -1,4 +1,4 @@
-package com.example.tt_logging;
+package com.example.tt_logging.Persona_Cuidado;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.example.tt_logging.Persona_Cuidado.ListAdapterPersona;
 import com.example.tt_logging.Persona_Cuidado.ListPersonaCuidado;
+import com.example.tt_logging.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,15 +32,17 @@ public class PersonasCuidado_Activity extends AppCompatActivity {
         listaPersonas = new ArrayList<>();
         inicio = Calendar.getInstance();
         ids_personas = new ArrayList<>();
-/*
+
         leer_shared_personaHelp();
 
         cargarArrayListPersona();
 
         mostrarPerosnasHelp();
-*/
-        cargarListaPersonas();
+
         mostrarDataPersonas();
+
+        //cargarListaPersonas();
+       // mostrarDataPersonas();
     }
 
     private void cargarListaPersonas() {
@@ -90,6 +93,7 @@ public class PersonasCuidado_Activity extends AppCompatActivity {
     }
 
     private void cargarArrayListPersona(){
+        //Aqui cargamos los String de ids de las personas
         SharedPreferences datos = getSharedPreferences("persona_help",MODE_PRIVATE);
         int i=0;
         do{

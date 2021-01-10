@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0F7FA"
+    android:orientation="vertical"
+    tools:context=".Agregar_Dosis.Ver_Add_Cantidad_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0091EA"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            app:srcCompat="@drawable/ic_midicina_dosis"></ImageView>
+
+        <TextView
+            android:id="@+id/TxtView_Medic_Dosis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:text="Medicamento"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"></TextView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtView_status_Dosis"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:text="Status:"
+            android:textAlignment="center"
+            android:textColor="#304FFE"
+            android:textSize="30dp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/TextView_Cantidad_Dosisi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif"
+            android:text="Dosis actual:"
+            android:textAlignment="center"
+            android:textColor="#304FFE"
+            android:textSize="20dp"
+            android:textStyle="normal"></TextView>
+
+        <TextView
+            android:id="@+id/TxtView_Termina_Dosis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif"
+            android:text="Fecha a terminar:"
+            android:textAlignment="center"
+            android:textColor="#304FFE"
+            android:textSize="20dp"
+            android:textStyle="normal"></TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif"
+            android:text="Digite la catidad a agregar:"
+            android:textAlignment="center"
+            android:textColor="#304FFE"
+            android:textSize="25dp"
+            android:textStyle="bold"></TextView>
+
+        <EditText
+            android:id="@+id/EditText_CantidadDosis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#B3E5FC"
+            android:hint="10"
+            android:inputType="number"
+            android:textColor="#000000"
+            android:textSize="25dp"></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bonotesfinal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="bottom"
+        android:layout_alignParentEnd="true"
+        >
+        <Button
+            android:id="@+id/btn_Cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#515050"
+            android:layout_marginStart="18dp"
+            android:text="Cancelar"
+            />
+        <Button
+            android:id="@+id/button_add_CantidadDosis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00B0FF"
+            android:shadowColor="#CD2323"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="18dp"
+            android:text="Finalizar"
+            />
+    </LinearLayout>
+
+    </LinearLayout>

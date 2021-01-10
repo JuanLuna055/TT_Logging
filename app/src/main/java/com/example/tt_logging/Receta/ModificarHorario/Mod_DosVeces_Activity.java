@@ -25,11 +25,12 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
 
     // Dos alarmas
 
-    Button selehora, selehora1;
-    TextView tvhora, tvhora1;
+    private Button selehora, selehora1;
+    private TextView tvhora, tvhora1;
 
-    Calendar actual = Calendar.getInstance();
-    Calendar calendar = Calendar.getInstance();
+    private Calendar actual = Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance();
+    private Calendar calendar1 = Calendar.getInstance();
     Button guardar;
     //Seleccionar Fechaprivate int minutos, hora;
     private int minutos, hora, minutos1, hora1;
@@ -37,6 +38,8 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
     private  ListElement medicamento;
     int periodo;
     int termina;
+    private ArrayList<String> horas;
+
     Calendar inicio = Calendar.getInstance();
     Calendar fin = Calendar.getInstance();
     @Override
@@ -49,6 +52,7 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
         tvhora = findViewById(R.id.tv_hora);
         tvhora1 = findViewById(R.id.tv1_hora);
         guardar = findViewById(R.id.btn_guardar);
+        horas = new ArrayList<>();
 
         tvhora.setText(String.format("%02d:%02d",8,00));
 
@@ -101,6 +105,7 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
             }
         });
 
+        //Selecciona hora 2
         selehora1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +120,7 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
                         calendar.set(Calendar.MINUTE, m);
                         hora1=h;
                         minutos1=m;
-                        tvhora.setText(String.format("%02d:%02d", h, m));
+                        tvhora1.setText(String.format("%02d:%02d", h, m));
                         System.out.println(calendar.getTime().toString());
                     }
                 }, hora1, minutos1, true);
@@ -127,28 +132,29 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Primera alarma
                 calendar.set(inicio.get(Calendar.YEAR),inicio.get(Calendar.MONTH),inicio.get(Calendar.DAY_OF_MONTH),actual.get(Calendar.HOUR_OF_DAY),actual.get(Calendar.MINUTE));
                 System.out.println(calendar.getTime().toString());
                 calendar.set(Calendar.HOUR_OF_DAY, hora);
                 calendar.set(Calendar.MINUTE, minutos);
-                System.out.println("Despues del cambio: "+calendar.getTime().toString());
                 System.out.println(calendar.getTime().toString());
                 Generar_Alarma(calendar,medicamento.getMedicamento(),medicamento.getRecordatorio(),termina);
                 //Segunda Alarma
-                calendar.set(Calendar.HOUR_OF_DAY, hora1);
-                calendar.set(Calendar.MINUTE, minutos1);
-                System.out.println("Despues del cambio: "+calendar.getTime().toString());
-                System.out.println(calendar.getTime().toString());
-                Generar_Alarma(calendar,medicamento.getMedicamento(),medicamento.getRecordatorio(),termina);
-
+                calendar1.set(inicio.get(Calendar.YEAR),inicio.get(Calendar.MONTH),inicio.get(Calendar.DAY_OF_MONTH),actual.get(Calendar.HOUR_OF_DAY),actual.get(Calendar.MINUTE));
+                calendar1.set(Calendar.HOUR_OF_DAY, hora1);
+                calendar1.set(Calendar.MINUTE, minutos1);
+                System.out.println(calendar1.getTime().toString());
+                Generar_Alarma(calendar1,medicamento.getMedicamento(),medicamento.getRecordatorio(),termina);
 
                 //Este tag donde haremos gua de la notifcacion
-                //WorkManager_noti.Guardarnoti(Alerttime,data,"tag1");
                 Toast.makeText(getApplicationContext(), "Alarma guardada.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Mod_DosVeces_Activity.this, Menu_principla_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("medicina",medicamento);
+                horas.add("("+hora+"-"+minutos+")");
+                horas.add("("+hora1+"-"+minutos1+")]");
+                //medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Cantidad:",i++,inicio,termino,horas,repeticion);
+                ListElement medicamento_mod = new ListElement(medicamento.getColor(), medicamento.getMedicamento(), medicamento.getRecordatorio(), "cantidad:", 10, medicamento.getInicio(), medicamento.getTermina(), horas, medicamento.getFrecuencia());
+                bundle.putSerializable("medicina",medicamento_mod);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 //finish();
@@ -160,33 +166,48 @@ public class Mod_DosVeces_Activity extends AppCompatActivity {
     public void Generar_Alarma (Calendar fecha, String medicamento, String Detalles,int fin){
         int j=0;
         String tag;
+        System.out.println("Termina en: "+fin);
         Long AlerTime;
-        for (int i=0;i<1;i++){
             j=0;
-            do{
-                tag = medicamento+"-a-"+fecha.get(Calendar.YEAR)+"m-"+fecha.get(Calendar.MONTH)+"-d"+fecha.get(Calendar.DAY_OF_MONTH)+"-h"+fecha.get(Calendar.HOUR_OF_DAY);
-                System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
-                AlerTime = fecha.getTimeInMillis() - System.currentTimeMillis();
-                System.out.println("El tiempo para esta alarma es: "+AlerTime);
-                Data data = GuardarData(medicamento,Detalles,10);
-                //WorkManager_noti.Guardarnoti(AlerTime,data,tag);
-                fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),1));
+        do{
+            tag = medicamento+"a"+fecha.get(Calendar.YEAR)+"m"+fecha.get(Calendar.MONTH)+"d"+fecha.get(Calendar.DAY_OF_MONTH)+"h"+fecha.get(Calendar.HOUR_OF_DAY);
+            System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
+            AlerTime = fecha.getTimeInMillis() - System.currentTimeMillis();
+            System.out.println("El tiempo para esta alarma es: "+AlerTime);
+            Data data = GuardarData("Es hora de tomar tu: "+medicamento,"Recomendacion: "+Detalles, tag);
+            //WorkManager_noti.Guardarnoti(AlerTime,data,tag);
+            if(this.medicamento.getFrecuencia() == 7){
+                fecha.setTime(sumarRestarMes(fecha.getTime(),1));
+            }else{
+                fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),this.medicamento.getFrecuencia()+1));
+            }
+            if (this.medicamento.getFrecuencia() == 0){
                 j++;
-            }while(j <= fin);
-        }
+            }else {
+               j = j+this.medicamento.getFrecuencia() + 1;
+            }
+        }while(j <= fin);
+
     }
 
-    private Data GuardarData(String titulo, String detalle, int id_noti){
+    private Data GuardarData(String titulo, String detalle, String id_noti){
         return new Data.Builder()
                 .putString("titulo",titulo)
                 .putString("detalle",detalle)
-                .putInt("id_noti",id_noti).build();
+                .putString("id_noti",id_noti).build();
     }
 
     public Date sumarRestarDiasFecha(Date fecha, int dias){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
         calendar.add(Calendar.DAY_OF_MONTH, dias);  // numero de horas a añadir, o restar en caso de horas<0
+        return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+    }
+
+    public Date sumarRestarMes(Date fecha, int mes){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha); // Configuramos la fecha que se recibe
+        calendar.add(Calendar.MONTH, mes);  // numero de horas a añadir, o restar en caso de horas<0
         return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
     }
 }

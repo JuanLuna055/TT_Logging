@@ -11,15 +11,12 @@ public class ListElement implements Serializable {
     private String recordatorio;
     private String status;
     private int cantidad;
+    private int dosis_consumir;
     private Calendar inicio;
     private Calendar termina;
     private String id_medicamento;
-    private int repeticion;
+    private int frecuencia;
     private String horas_rec="";
-
-    public String getId_medicamento() {
-        return id_medicamento;
-    }
 
     public void setId_medicamento(String id_medicamento) {
         this.id_medicamento = id_medicamento;
@@ -35,7 +32,7 @@ public class ListElement implements Serializable {
     }
 
 
-    public ListElement(String color, String medicamento, String recordatorio, String status, int cantidad, Calendar inicio, Calendar terminal, ArrayList<String> hora,int repetir) {
+    public ListElement(String color, String medicamento, String recordatorio, String status, int cantidad, Calendar inicio, Calendar terminal, ArrayList<String> hora,int frecuncia) {
         this.color = color;
         this.medicamento = medicamento;
         this.recordatorio = recordatorio;
@@ -43,10 +40,22 @@ public class ListElement implements Serializable {
         this.cantidad = cantidad;
         this.inicio = inicio;
         this.termina = terminal;
+        this.frecuencia = frecuncia;
+        for(int i=0;i<hora.size();i++){
+            horas_rec = horas_rec+hora.get(i);
+        }
 
-        id_medicamento = medicamento+"-"+recordatorio+"-"+status+"-"+cantidad+"-"+repetir+"-"+
-                inicio.get(Calendar.YEAR)+"-"+inicio.get(Calendar.MONTH)+"-"+inicio.get(Calendar.DAY_OF_MONTH)+"-"+inicio.get(Calendar.HOUR_OF_DAY)+
-                "-"+terminal.get(Calendar.YEAR)+"-"+terminal.get(Calendar.MONTH)+"-"+terminal.get(Calendar.DAY_OF_MONTH);
+        // termi es la cantidad de dias que dura el tratamiento para el medicamento dado.
+        int termi = termina.get(Calendar.DAY_OF_MONTH) - inicio.get(Calendar.DAY_OF_MONTH);
+        if(termi < 0){
+            termi = -termi;
+        }
+
+        dosis_consumir =(int)(termi / (frecuncia+1)) * (hora.size()+1);
+
+        id_medicamento = medicamento+"-"+recordatorio+"-"+status+"-"+cantidad+"-"+frecuncia+"-"+dosis_consumir+"-"+
+                inicio.get(Calendar.YEAR)+"-"+inicio.get(Calendar.MONTH)+"-"+inicio.get(Calendar.DAY_OF_MONTH)+"-"
+                +terminal.get(Calendar.YEAR)+"-"+terminal.get(Calendar.MONTH)+"-"+terminal.get(Calendar.DAY_OF_MONTH);
 
         switch (hora.size()){
             case 1:{
@@ -105,6 +114,7 @@ public class ListElement implements Serializable {
             }
 
         }
+        System.out.println("EL ID ES: "+id_medicamento);
     //  this.id_img = id_img;
     }
 
@@ -133,6 +143,7 @@ public class ListElement implements Serializable {
                     // System.out.println("Entramos a bandera");
                     bandera2=1;
                     bandera=1;
+                    j++;
                 }
             }while(bandera == 0);
             switch (j){
@@ -140,7 +151,7 @@ public class ListElement implements Serializable {
                     //Caso variable medicamento
                     String medicina = dato;
                     medicamento = medicina;
-                    //  System.out.println("Medicina es: "+dato);
+                    //System.out.println("Medicina es: "+dato);
                     dato="";
                     break;
                 }
@@ -148,14 +159,14 @@ public class ListElement implements Serializable {
                     //Caso variable recordatorio
                     String record = dato;
                     recordatorio = record;
-                    //  System.out.println("recordatorio es: "+recordatorio);
+                    //System.out.println("recordatorio es: "+recordatorio);
                     dato="";
                     break;
                 }
-                case 3:{
+                case 3: {
                     //Caso variable status
                     status = dato;
-                    //  System.out.println("Cantidad es: "+status);
+                    //System.out.println("Estatus es: "+status);
                     dato="";
                     break;
                 }
@@ -163,56 +174,65 @@ public class ListElement implements Serializable {
                     //Caso variable repetir
                     String cantid = dato;
                     cantidad = Integer.parseInt(cantid);
-                    //   System.out.println("Repeticion es: "+ cantidad);
+                    //System.out.println("Cantidad es: "+ cantidad);
                     dato="";
                     break;
                 }
                 case 5:{
-                    //Caso variable repetir
-                    repeticion = Integer.parseInt(dato);
-                    //  System.out.println("Repeticion es: "+ repeticion);
+                    //Caso variable frecuncia
+                    frecuencia = Integer.parseInt(dato);
+                    //System.out.println("Frecuencia es: "+ frecuencia);
                     dato="";
                     break;
                 }
                 case 6:{
-                    //Caso variable Año Fecha Inicio
-                    inicio.set(Calendar.YEAR,Integer.parseInt(dato));
-                    //  System.out.println("Medicina es: "+ inicio.get(Calendar.YEAR));
+                    //Caso variable frecuncia
+                    dosis_consumir = Integer.parseInt(dato);
+                    //System.out.println("dosis a consumir es: "+ dosis_consumir);
                     dato="";
                     break;
                 }
                 case 7:{
                     //Caso variable Año Fecha Inicio
-                    inicio.set(Calendar.MONTH,Integer.parseInt(dato));
-                    //System.out.println("Medicina es: "+ inicio.get(Calendar.MONTH));
+                    inicio.set(Calendar.YEAR,Integer.parseInt(dato));
+                    //System.out.println("Año de inicio es: "+ inicio.get(Calendar.YEAR));
                     dato="";
                     break;
                 }
                 case 8:{
                     //Caso variable Año Fecha Inicio
-                    inicio.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dato));
-                    //   System.out.println("Medicina es: "+ inicio.get(Calendar.DAY_OF_MONTH));
+                    inicio.set(Calendar.MONTH,Integer.parseInt(dato));
+                    //System.out.println("Mes de inicio es: "+ inicio.get(Calendar.MONTH));
                     dato="";
                     break;
                 }
                 case 9:{
                     //Caso variable Año Fecha Inicio
-                    termina.set(Calendar.YEAR,Integer.parseInt(dato));
-                    //  System.out.println("Medicina es: "+ inicio.get(Calendar.YEAR));
+                    inicio.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dato));
+                    //System.out.println("dia de inicio es: "+ inicio.get(Calendar.DAY_OF_MONTH));
                     dato="";
                     break;
                 }
+
                 case 10:{
                     //Caso variable Año Fecha Inicio
-                    termina.set(Calendar.MONTH,Integer.parseInt(dato));
-                    //  System.out.println("Medicina es: "+ inicio.get(Calendar.MONTH));
+                    termina.set(Calendar.YEAR,Integer.parseInt(dato));
+                    //System.out.println("Año de termino es: "+ termina.get(Calendar.YEAR));
                     dato="";
                     break;
                 }
                 case 11:{
                     //Caso variable Año Fecha Inicio
+                    termina.set(Calendar.MONTH,Integer.parseInt(dato));
+                      //System.out.println("mes de termino es: "+ termina.get(Calendar.MONTH));
+                    dato="";
+                    break;
+                }
+                case 12:{
+                    //Caso variable Año Fecha Inicio
+                    //System.out.println("Caso 11"+ dato);
                     termina.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dato));
-                    // System.out.println("Medicina es: "+ inicio.get(Calendar.DAY_OF_MONTH));
+                     //System.out.println("dia de termino: "+ termina.get(Calendar.DAY_OF_MONTH));
                     dato="";
                     break;
                 } default:{
@@ -221,13 +241,25 @@ public class ListElement implements Serializable {
                 }
             }
         }while(bandera2 != 1);
-        System.out.println("El ultimo termino es: "+ id_medi.charAt(i));
+        //System.out.println("El ultimo termino es: "+ id_medi.charAt(i));
         do{
             horas_rec = horas_rec + id_medi.charAt(i);
             //System.out.println(horas_rec);
             i++;
         }while (id_medi.charAt(i) != ']');
         horas_rec = horas_rec + ']';
+
+        // termi es la cantidad de dias que dura el tratamiento para el medicamento dado.
+        int termi = termina.get(Calendar.DAY_OF_MONTH) - inicio.get(Calendar.DAY_OF_MONTH);
+        if(termi < 0){
+            termi = -termi;
+        }
+
+        System.out.println("******************************************");
+        id_medicamento = medicamento+"-"+recordatorio+"-"+status+"-"+cantidad+"-"+frecuencia+"-"+dosis_consumir+"-"+
+                inicio.get(Calendar.YEAR)+"-"+inicio.get(Calendar.MONTH)+"-"+inicio.get(Calendar.DAY_OF_MONTH)+"-"
+                +termina.get(Calendar.YEAR)+"-"+termina.get(Calendar.MONTH)+"-"+termina.get(Calendar.DAY_OF_MONTH);
+        id_medicamento = id_medicamento + horas_rec;
     }
 
     /*
@@ -294,5 +326,39 @@ public class ListElement implements Serializable {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public int getFrecuencia() {
+        return frecuencia;
+    }
+
+    public void setFrecuencia(int frecuencia) {
+        this.frecuencia = frecuencia;
+    }
+
+    public int getDosis_consumir() {
+        return dosis_consumir;
+    }
+
+    public void setDosis_consumir(int dosis_consumir) {
+        this.dosis_consumir = dosis_consumir;
+    }
+
+    public String getHoras_rec() {
+        return horas_rec;
+    }
+
+    public void setHoras_rec(String horas_rec) {
+        this.horas_rec = horas_rec;
+    }
+
+    public String getId_medicamento() {
+        id_medicamento="";
+        id_medicamento = medicamento+"-"+recordatorio+"-"+status+"-"+cantidad+"-"+frecuencia+"-"+dosis_consumir+"-"+
+                inicio.get(Calendar.YEAR)+"-"+inicio.get(Calendar.MONTH)+"-"+inicio.get(Calendar.DAY_OF_MONTH)+"-"
+                +termina.get(Calendar.YEAR)+"-"+termina.get(Calendar.MONTH)+"-"+termina.get(Calendar.DAY_OF_MONTH);
+        id_medicamento = id_medicamento + horas_rec;
+
+        return id_medicamento;
     }
 }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.example.tt_logging.AddDatoMedico;
+import com.example.tt_logging.Agregar_Dosis.Add_Dosis_Activity;
 import com.example.tt_logging.Notas.Notas_Activity;
 import com.example.tt_logging.Persona_Cuidado.Add_PersonasHelp_Activity;
 import com.example.tt_logging.R;
@@ -17,7 +19,7 @@ import com.example.tt_logging.R;
 public class Add_Alarma extends AppCompatActivity {
 
 
-    private CardView add_medicina,add_nota,add_personaCuidad;
+    private CardView add_medicina,add_nota,add_personaCuidad,addCantidad,add_medida;
 
 
     @Override
@@ -29,6 +31,8 @@ public class Add_Alarma extends AppCompatActivity {
         add_nota = (CardView)findViewById(R.id.add_nota);
         add_medicina = (CardView)findViewById(R.id.add_medic);
         add_personaCuidad = findViewById(R.id.add_persona);
+        addCantidad = findViewById(R.id.add_dosis);
+        add_medida = (CardView) findViewById(R.id.add_medidas);
 
         add_medicina.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,5 +59,18 @@ public class Add_Alarma extends AppCompatActivity {
             }
         });
 
+        addCantidad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Add_Alarma.this, Add_Dosis_Activity.class));
+            }
+        });
+        add_medida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent (Add_Alarma.this, AddDatoMedico.class));
+                finish();
+            }
+        });
     }
 }

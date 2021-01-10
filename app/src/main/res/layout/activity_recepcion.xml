@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#B2EBF2"
+    tools:context=".Receta.repeticiones.Recepcion_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tag_recepcion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Tag: "
+            android:textColor="@color/green_dark"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="35dp"
+            android:textStyle="bold"></TextView>
+
+    </LinearLayout>
+</LinearLayout>

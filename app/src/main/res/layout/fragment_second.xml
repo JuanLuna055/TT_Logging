@@ -3,19 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f9f9ed"
+    android:orientation="vertical"
     tools:context=".SecondFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:background="#F48888"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center"
-        android:text="segundo fragmentot"
-        android:textColor="@color/green_normal"
-        android:textSize="40dp" />
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tamnav"
+            android:elevation="8dp"
+            android:text="@string/titulomedicamentos"
+            android:background="#25B9D0"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/titulouno" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="610dp"
+            android:orientation="vertical">
+
+            <!--
+            <ListView
+                android:id="@+id/lstMedicamentos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMedicamentos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </FrameLayout>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetalleMedicamento">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#f9f9ed"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tamnav"
+            android:background="#25B9D0"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:text="@string/tituloadherencia"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="@dimen/titulouno"
+            android:textStyle="bold" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pcGrafico"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:elevation="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="#f9f9ed"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="128dp"
+                android:background="#f9f9ed"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvFijoNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:text="Nombre:"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:textSize="@dimen/titulodos"/>
+
+                <TextView
+                    android:id="@+id/tvFijoEstado"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:text="Observaciones:"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:textSize="@dimen/titulodos" />
+
+                <TextView
+                    android:id="@+id/tvFijoInico"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:text="Fecha de Inicio:"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:textSize="@dimen/titulodos" />
+
+                <TextView
+                    android:id="@+id/tvFijoTermino"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:text="Fecha de Termino"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:textSize="@dimen/titulotres" />
+
+                <TextView
+                    android:id="@+id/tvFijoCantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:text="Adherencia:"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:textSize="@dimen/titulodos" />
+                <TextView
+                    android:id="@+id/tvFijoValidados"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:text="No validados:"
+                    android:textColor="#000"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:gravity="center"
+                    android:textSize="@dimen/titulodos" />
+                <TextView
+                    android:id="@+id/tvFijoNoValidados"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:text="Validados:"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:textSize="@dimen/titulodos" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f9f9ed"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvMedicamentoNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:gravity="center"
+                    android:text="@string/pmedicamentonombre"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="@dimen/titulodos" />
+
+                <TextView
+                    android:id="@+id/tvMedicamentoEfecto"
+                    android:text="@string/pmedicamentoefecto"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="@dimen/titulodos" />
+
+                <TextView
+                    android:id="@+id/tvMedicamentoInicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:gravity="center"
+                    android:text="@string/pmedicamentoinicio"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="@dimen/titulodos" />
+
+                <TextView
+                    android:id="@+id/tvMedicamentoTermino"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:gravity="center"
+                    android:text="@string/pmedicamentotermino"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="@dimen/titulodos" />
+
+                <TextView
+                    android:id="@+id/tvMedicamentoCantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:gravity="center"
+                    android:text="@string/pmedicamentocantidad"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="@dimen/titulodos" />
+
+                <TextView
+                    android:id="@+id/tvMedicamentoNoValidado"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:gravity="center"
+                    android:text="@string/pmedicamentonovalidado"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="@dimen/titulodos" />
+
+                <TextView
+                    android:id="@+id/tvMedicamentoValidado"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/alturatxt"
+                    android:gravity="center"
+                    android:text="@string/pmedicamentovalidado"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="@dimen/titulodos" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

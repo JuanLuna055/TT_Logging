@@ -13,23 +13,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-
-        <activity android:name=".Add_Tratamiento"></activity>
+        <activity android:name=".SeguimientoDato"></activity>
+        <activity android:name=".DetalleMedicamento" />
+        <activity android:name=".DetalleDatos" />
+        <activity android:name=".AddDatoMedico" />
+        <activity android:name=".Agregar_Dosis.Ver_Add_Cantidad_Activity" />
+        <activity android:name=".Agregar_Dosis.Add_Dosis_Activity" />
+        <activity android:name=".Receta.repeticiones.Recepcion_Activity" />
+        <activity android:name=".Receta.repeticiones.Descripcion_Medicina" />
+        <activity android:name=".Receta.ModificarHorario.Mod_SeisVeces_Activity" />
+        <activity android:name=".Receta.ModificarHorario.Mod_CincoVeces_Activity" />
+        <activity android:name=".Receta.ModificarHorario.Mod_CuatroVeces_Activity" />
+        <activity android:name=".Receta.ModificarHorario.Mod_TresVeces_Activity" />
+        <activity android:name=".Add_Tratamiento" />
         <activity android:name=".ImagesActivity" />
-
-        <activity android:name=".Persona_Cuidado.Add_PersonasHelp_Activity"></activity>
-        <activity android:name=".Ver_Notas_Activity" />
-        <activity android:name=".PersonasCuidado_Activity" />
+        <activity android:name=".Persona_Cuidado.Add_PersonasHelp_Activity" />
+        <activity android:name=".Notas.Ver_Notas_Activity" />
+        <activity android:name=".Persona_Cuidado.PersonasCuidado_Activity" />
         <activity android:name=".Notas.Notas_Activity" />
         <activity android:name=".Receta.ModificarHorario.Mod_DosVeces_Activity" />
-        <activity android:name=".Add_Tratamiento" />
-
         <activity android:name=".Reset_ContrasenaActivity2" />
         <activity android:name=".Receta.ModificarHorario.Mod_unavez" />
         <activity android:name=".Receta.Add_Medicina" />
         <activity android:name=".Receta.Add_Alarma" />
         <activity android:name=".Menu_principla_Activity" />
-        <activity android:name=".FirstFragment" />
+        <activity android:name=".Alarmas.FirstFragment" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".Perfil_Usuario" />
         <activity android:name=".registro" />

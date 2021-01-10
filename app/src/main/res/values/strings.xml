@@ -20,5 +20,30 @@
     <string name="not_revoke"></string>
     <string name="not_firebase_auth">No se pudo autenticar con Firebase</string>
 
+    <!-- Medicamentos -->
+    <string name="titulomedicamentos">Medicamentos Actuales</string>
+    <string name="medicamentonombre">Nombre</string>
+    <string name="medicamentoefecto">Efecto</string>
 
+    <string name="pmedicamentonombre">Nombre</string>
+    <string name="pmedicamentoefecto">Efecto</string>
+    <string name="pmedicamentotermino">Termino</string>
+    <string name="pmedicamentoinicio">Inicio</string>
+    <string name="pmedicamentocantidad">Cantidad</string>
+
+    <!-- Datos Medicos -->
+    <string name="titulodatos">Datos Medicos</string>
+    <string name="datonombre">Nombre</string>
+    <string name="datovariable">Descripcion</string>
+
+    <string name="tituloseguimiento">Seguimiento</string>
+    <string name="pdatonombre">Nombre</string>
+    <string name="pdatovariable">Descripcion</string>
+    <string name="tituloadherencia">Adherencia</string>
+    <string name="fecha">Fecha</string>
+    <string name="pmedicamentovalidado">Total Validados</string>
+    <string name="pmedicamentonovalidado">Total No Validados</string>
+    <string name="tituloadddatos">Agregar Medida</string>
+    <string name="titulomisdatos">Seleccionar Dato:</string>
+    <string name="pingresarfecha">Fecha Actual</string>
 </resources>

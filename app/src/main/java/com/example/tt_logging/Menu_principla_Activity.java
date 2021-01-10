@@ -4,40 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.work.impl.model.Preference;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
+import com.example.tt_logging.Alarmas.FirstFragment;
 import com.example.tt_logging.Receta.ListElement;
 import com.example.tt_logging.Receta.ThirdFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Menu_principla_Activity extends AppCompatActivity {
-    FirstFragment firstFragment = new FirstFragment();
-    SecondFragment secondFragment = new SecondFragment();
-    ThirdFragment thirdFragment = new ThirdFragment();
-    CuartoFragment cuartofragment = new CuartoFragment();
+    private FirstFragment firstFragment = new FirstFragment();
+    private SecondFragment secondFragment = new SecondFragment();
+    private ThirdFragment thirdFragment = new ThirdFragment();
+    private CuartoFragment cuartofragment = new CuartoFragment();
     private boolean permiso;
     private String hora;
+    private ListElement medicamento = null;
     private Bundle notificacion;
     private String nota_recibida;
     private SharedPreferences preferences;
@@ -46,19 +32,16 @@ public class Menu_principla_Activity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        System.out.println("Menu principal: onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("Menu principal: onResumen");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.out.println("Menu principal: Destroy");
     }
 
     @Override
@@ -67,7 +50,6 @@ public class Menu_principla_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_principla_);
         System.out.println("Estamos en onCreate Activiti_principal");
         Bundle objeto = getIntent().getExtras();
-        ListElement medicamento = null;
         ids_medicamentos.clear();
         //eliminarPreferencesMedicamentos();
         int bandera =0;
@@ -81,7 +63,7 @@ public class Menu_principla_Activity extends AppCompatActivity {
                 // Obtenemos medicina
                 medicamento = (ListElement) objeto.getSerializable("medicina");
                 System.out.println("|||||| El dato resivido es el siguiente:");
-                System.out.println("Medicamento: "+medicamento.getMedicamento()+" Status: "+medicamento.getStatus()+" Recordatorio: "+medicamento.getRecordatorio());
+                System.out.println("El medicamento recibido es: "+medicamento.getId_medicamento());
                 leer_shared();
                 guardar_shared(medicamento.getId_medicamento());
                 mostrarMedicamentos(ids_medicamentos);
@@ -106,8 +88,10 @@ public class Menu_principla_Activity extends AppCompatActivity {
         // Enviamos los datos necesarios a los fraagmentos
         notificacion = new Bundle();
         notificacion.putSerializable("notificacion", ids_medicamentos);
+        firstFragment.setArguments(notificacion);
         thirdFragment.setArguments(notificacion);
-
+        secondFragment.setArguments(notificacion);
+        loadFragment(firstFragment);
         BottomNavigationView navegation = findViewById(R.id.bottom_navegation);
          navegation.setOnNavigationItemSelectedListener(mOnNavegationItemSelectedListener);
     }
@@ -117,7 +101,7 @@ public class Menu_principla_Activity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
                 case R.id.firstFragment:
-                    startActivity(new Intent(getApplicationContext(),FirstFragment.class));
+                    loadFragment(firstFragment);
                     return true;
                 case R.id.secondFragment:
                     loadFragment(secondFragment);
@@ -167,6 +151,7 @@ public class Menu_principla_Activity extends AppCompatActivity {
         do{
             if(datos.getString("id_med"+i,"error") != "error"){
                 System.out.println("Se pudo leer el id_med"+i);
+                System.out.println(datos.getString("id_med"+i,"sin med"));
             }
             i++;
         }while (i<10);

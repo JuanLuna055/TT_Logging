@@ -35,10 +35,12 @@ public class Mod_unavez extends AppCompatActivity {
     //Seleccionar Fechaprivate int minutos, hora;
     private int minutos, hora, dia, mes,anio;
     private  ListElement medicamento;
+    private ListElement medicamento_mod;
     int periodo;
     int termina;
-    Calendar inicio = Calendar.getInstance();
-    Calendar fin = Calendar.getInstance();
+    private Calendar inicio = Calendar.getInstance();
+    private Calendar fin = Calendar.getInstance();
+    private ArrayList<String> horas;
 
     @Override
 
@@ -50,7 +52,7 @@ public class Mod_unavez extends AppCompatActivity {
         tvhora = findViewById(R.id.tv_hora);
         guardar = findViewById(R.id.btn_guardar);
         btn_eliminar = findViewById(R.id.btn_eliminar);
-
+        horas = new ArrayList();
         tvhora.setText(String.format("%02d:%02d",8,00));
 
         Bundle objeto = getIntent().getExtras();
@@ -103,7 +105,7 @@ public class Mod_unavez extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(hora > -1 && minutos > -1){
                 calendar.set(inicio.get(Calendar.YEAR),inicio.get(Calendar.MONTH),inicio.get(Calendar.DAY_OF_MONTH),actual.get(Calendar.HOUR_OF_DAY),actual.get(Calendar.MINUTE));
                 System.out.println(calendar.getTime().toString());
                 calendar.set(Calendar.HOUR_OF_DAY, hora);
@@ -112,16 +114,19 @@ public class Mod_unavez extends AppCompatActivity {
                 //calendar.setTime(sumarRestarminutosFecha(calendar.getTime(),1));
                 System.out.println(calendar.getTime().toString());
                 Generar_Alarma(calendar,medicamento.getMedicamento(),medicamento.getRecordatorio(),termina);
+
                 //Este tag donde haremos gua de la notifcacion
-                //WorkManager_noti.Guardarnoti(Alerttime,data,"tag1");
                 Toast.makeText(getApplicationContext(), "Alarma guardada.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Mod_unavez.this, Menu_principla_Activity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("medicina",medicamento);
+                horas.add("("+hora+"-"+minutos+")]");
+                //medicamento = new ListElement("#FF0000",nom_medicamento.getText().toString(),recordato.getText().toString(),"Cantidad:",i++,inicio,termino,horas,repeticion);
+                medicamento_mod = new ListElement(medicamento.getColor(),medicamento.getMedicamento(),medicamento.getRecordatorio(),"Activo",medicamento.getCantidad(),medicamento.getInicio(),medicamento.getTermina(),horas,medicamento.getFrecuencia());
+                bundle.putSerializable("medicina",medicamento_mod);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                //finish();
-
+                finish();
+                }
             }
         });
 
@@ -147,11 +152,11 @@ public class Mod_unavez extends AppCompatActivity {
         return UUID.randomUUID().toString();
     }
 
-    private Data GuardarData(String titulo, String detalle, int id_noti){
+    private Data GuardarData(String titulo, String detalle, String id_noti){
         return new Data.Builder()
                 .putString("titulo",titulo)
                 .putString("detalle",detalle)
-                .putInt("id_noti",id_noti).build();
+                .putString("id_noti",id_noti).build();
     }
 
     public Date sumarRestarminutosFecha(Date fecha, int minutos){
@@ -176,21 +181,32 @@ public class Mod_unavez extends AppCompatActivity {
         return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
     }
 
-    public void Generar_Alarma (Calendar fecha, String medicamento, String Detalles,int fin){
+    public Date sumarRestarMes(Date fecha, int mes){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha); // Configuramos la fecha que se recibe
+        calendar.add(Calendar.MONTH, mes);  // numero de horas a añadir, o restar en caso de horas<0
+        return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+    }
+
+    private void Generar_Alarma (Calendar fecha, String medicamento, String Detalles,int fin){
         int j=0;
         String tag;
         Long AlerTime;
         for (int i=0;i<1;i++){
             j=0;
             do{
-                tag = medicamento+"-a-"+fecha.get(Calendar.YEAR)+"m-"+fecha.get(Calendar.MONTH)+"-d"+fecha.get(Calendar.DAY_OF_MONTH)+"-h"+fecha.get(Calendar.HOUR_OF_DAY);
+                tag = medicamento+"a"+fecha.get(Calendar.YEAR)+"m"+fecha.get(Calendar.MONTH)+"d"+fecha.get(Calendar.DAY_OF_MONTH)+"h"+fecha.get(Calendar.HOUR_OF_DAY);
                 System.out.println("Alarma programada para: "+fecha.getTime().toString()+"ID: "+tag);
                 AlerTime = fecha.getTimeInMillis() - System.currentTimeMillis();
                 System.out.println("El tiempo para esta alarma es: "+AlerTime);
-                Data data = GuardarData("Es hora de tomar tu: "+medicamento,"Recomendacion: "+Detalles,10);
+                Data data = GuardarData("Es hora de tomar tu: "+medicamento,"Recomendacion: "+Detalles,""+tag);
                 WorkManager_noti.Guardarnoti(AlerTime,data,tag);
-                fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),1));
-                j++;
+                if(this.medicamento.getFrecuencia() == 7){
+                    fecha.setTime(sumarRestarMes(fecha.getTime(),1));
+                }else{
+                    fecha.setTime(sumarRestarDiasFecha(fecha.getTime(),this.medicamento.getFrecuencia()+1));
+                    j = j + this.medicamento.getFrecuencia()+1;
+                }
             }while(j <= fin);
         }
     }
