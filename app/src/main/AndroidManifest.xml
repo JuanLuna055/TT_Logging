@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity android:name=".Agregar_Dosis.Ver_Add_Cantidad_Activity"></activity>
+        <activity android:name=".SeguimientoDato"></activity>
+        <activity android:name=".DetalleMedicamento" />
+        <activity android:name=".DetalleDatos" />
+        <activity android:name=".AddDatoMedico" />
+        <activity android:name=".Agregar_Dosis.Ver_Add_Cantidad_Activity" />
         <activity android:name=".Agregar_Dosis.Add_Dosis_Activity" />
         <activity android:name=".Receta.repeticiones.Recepcion_Activity" />
         <activity android:name=".Receta.repeticiones.Descripcion_Medicina" />

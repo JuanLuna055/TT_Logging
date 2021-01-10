@@ -90,6 +90,7 @@ public class Menu_principla_Activity extends AppCompatActivity {
         notificacion.putSerializable("notificacion", ids_medicamentos);
         firstFragment.setArguments(notificacion);
         thirdFragment.setArguments(notificacion);
+        secondFragment.setArguments(notificacion);
         loadFragment(firstFragment);
         BottomNavigationView navegation = findViewById(R.id.bottom_navegation);
          navegation.setOnNavigationItemSelectedListener(mOnNavegationItemSelectedListener);

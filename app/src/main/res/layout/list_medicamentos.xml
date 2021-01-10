@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvMedicamentos"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#25B9D0">
+
+        <TextView
+            android:id="@+id/tvMedicamentoNombrecv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/alturatxt"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:textSize="@dimen/titulouno"
+            android:text="@string/medicamentonombre" />
+
+        <TextView
+            android:id="@+id/tvMedicamentoDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/alturatxt"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textSize="@dimen/titulodos"
+            android:text="@string/medicamentoefecto" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
